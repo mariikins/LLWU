@@ -52,27 +52,15 @@ function renderOverview() {
 const CAT = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9"];
 const hypLabel = (id) => "H" + (DATA.hypotheses.findIndex((h) => h.id === id) + 1);
 
-function liftSVG(e) {
-  const roles = ["go", "lift", "lift", "lift", "lift", "lift", "hold", "hold", "lift", "lift", "lift", "lift", "go"];
-  const lifts = [[-40, -150], [-20, -195], [-10, -130], [5, -175], [15, -210], [10, -160], [25, -185], [35, -140], [45, -200]];
-  let li = 0;
-  const dots = roles.map((r, i) => {
-    const t = 0.18 + (i / (roles.length - 1)) * 0.64;
-    const x = (1 - t) ** 2 * 130 + 2 * (1 - t) * t * 300 + t ** 2 * 470;
-    const y = (1 - t) ** 2 * 230 + 2 * (1 - t) * t * 320 + t ** 2 * 230 - 10;
-    if (r === "lift") { const [dx, dy] = lifts[li++]; return `<circle class="dot-lift" cx="${x}" cy="${y}" r="7" style="--dx:${dx}px;--dy:${dy}px;--d:${(li * 0.35).toFixed(2)}s"><title>Lift you</title></circle>`; }
-    if (r === "hold") return `<circle class="dot-hold" cx="${x}" cy="${y}" r="7" style="--d:${i * 0.4}s"><title>Hold you</title></circle>`;
-    return `<circle class="dot-go" cx="${x}" cy="${y}" r="7" style="--dx:${i === 0 ? -150 : 150}px"><title>Let you go</title></circle>`;
-  }).join("");
-  return `<svg class="lift-svg" viewBox="0 0 600 340" role="img" aria-label="${e.lift} of ${e.n} want to be lifted, ${e.hold} held, ${e.go} let go">
-    <defs><radialGradient id="liftGlow" cx="50%" cy="20%" r="60%"><stop offset="0" stop-color="#f2a65a" stop-opacity=".22"/><stop offset="1" stop-color="#f2a65a" stop-opacity="0"/></radialGradient></defs>
-    <rect width="600" height="340" fill="url(#liftGlow)"/>
-    <path d="M130 230 Q300 320 470 230" fill="none" stroke="#f2a65a" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>
-    ${dots}
-    <text x="300" y="34" text-anchor="middle" class="lift-t">Lift you · ${e.lift}</text>
-    <text x="300" y="322" text-anchor="middle" class="lift-t muted-t">Hold you · ${e.hold}</text>
-    <text x="555" y="250" text-anchor="end" class="lift-t muted-t">Let you go · ${e.go}</text>
-  </svg>`;
+function liftTally(e, total) {
+  const none = total - e.n;
+  const rows = [["Lift you", e.lift, "lift"], ["Hold you", e.hold, "hold"], ["Let you go", e.go, "go"], ["No answer", none, "none"]].filter((r) => r[1] > 0);
+  let k = 0;
+  return `<div class="lift-rows">${rows.map(([label, n, cls]) => `<div class="lift-row ${cls}">
+      <div class="lift-label">${label}</div>
+      <div class="lift-dots">${Array.from({ length: n }, () => `<i style="--d:${(k++ * 0.06).toFixed(2)}s"></i>`).join("")}</div>
+      <div class="lift-n">${n}</div>
+    </div>`).join("")}</div>`;
 }
 
 function renderSurvey() {
@@ -132,13 +120,11 @@ function renderSurvey() {
     </div>
 
     <div class="card lift-card">
-      ${liftSVG(e)}
-      <div class="lift-text">
-        <div class="q-title" style="color:var(--c-embrace)">If a project could embrace you…</div>
-        <div class="f-stat" style="font-size:64px">${e.lift} <span style="font-size:28px;color:var(--muted)">of ${e.n}</span></div>
-        <p>want it to <strong>lift</strong> them. Only ${e.hold} want to be held, and ${e.go} want to be let go.</p>
-        <p class="muted" style="margin-top:10px">This is the clearest signal in the data: the elevating embrace isn't just the thesis argument, it's what people asked for.</p>
+      <div>
+        <div class="lift-q">If a project could embrace you, what would you want it to do?</div>
+        ${liftTally(e, S.n)}
       </div>
+      <blockquote class="lift-pull">Most people didn't ask to be held.<br>They asked to be lifted.<span>${e.lift} of the ${e.n} people who answered chose lift.</span></blockquote>
     </div>
 
     <h2>Who answered</h2>
