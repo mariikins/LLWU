@@ -64,7 +64,7 @@ code { background: var(--bg-3); padding: 1px 6px; border-radius: 4px; font-size:
 }
 .search:focus { outline: 1px solid var(--accent); }
 .nav { display: flex; flex-direction: column; gap: 2px; }
-.nav-label { margin-top: 10px; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 4px 8px; }
+.nav-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); padding: 4px 8px; }
 .nav-link {
   color: var(--muted); padding: 7px 10px; border-radius: 6px; font-size: 14px;
   transition: background 0.15s, color 0.15s;

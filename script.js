@@ -14,7 +14,7 @@ function show(view) {
   if (view === "graph") { resizeGraph(); setTimeout(fit, 50); }
   if (view === "explore" && typeof drawExLines === "function") setTimeout(drawExLines, 30);
 }
-window.addEventListener("hashchange", () => show(location.hash.slice(1) || "explore"));
+window.addEventListener("hashchange", () => show(location.hash.slice(1) || "graph"));
 $("#menuBtn").onclick = () => $("#sidebar").classList.toggle("open");
 
 /* ---------- Quote card ---------- */
@@ -775,4 +775,4 @@ resizeGraph();
 buildGraph();
 window.addEventListener("resize", () => { resizeGraph(); });
 loop();
-show(location.hash.slice(1) || "explore");
+show(location.hash.slice(1) || "graph");

@@ -256,7 +256,7 @@ function exFocus(k) {
 }
 
 window.addEventListener("resize", () => { if ($("#view-explore")?.classList.contains("active")) drawExLines(); });
-window.addEventListener("hashchange", () => { if (location.hash === "#explore" || location.hash === "") setTimeout(drawExLines, 30); });
+window.addEventListener("hashchange", () => { if (location.hash === "#explore") setTimeout(drawExLines, 30); });
 
 /* Sidebar search → Explore */
 $("#search").addEventListener("input", (e) => {
@@ -270,4 +270,4 @@ $("#search").addEventListener("input", (e) => {
 });
 
 renderExplore();
-if (!location.hash || location.hash === "#explore") { show("explore"); setTimeout(drawExLines, 40); }
+if (location.hash === "#explore") setTimeout(drawExLines, 40);
