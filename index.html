@@ -26,6 +26,7 @@
       <a href="#overview" class="nav-link" data-view="overview">▤ Overview</a>
       <a href="#interviews" class="nav-link" data-view="interviews">❝ Interviews</a>
       <a href="#themes" class="nav-link" data-view="themes">◈ Themes</a>
+      <a href="#undercurrents" class="nav-link" data-view="undercurrents">≋ Undercurrents</a>
       <a href="#hypotheses" class="nav-link" data-view="hypotheses">△ Hypotheses</a>
       <a href="#cases" class="nav-link" data-view="cases">▣ Case Studies</a>
       <a href="#formlab" class="nav-link" data-view="formlab">◇ Form Lab</a>
@@ -42,16 +43,11 @@
     <section class="view active" id="view-graph">
       <header class="view-head">
         <h1>Connections</h1>
-        <p class="muted">Participants, themes and hypotheses. Drag nodes, hover to trace links, click to open.</p>
+        <p class="muted">Participants, themes, undercurrents and the echoes between them. Scroll to zoom, drag to pan, click a node to open it. Toggle layers below.</p>
       </header>
       <div class="graph-wrap">
         <canvas id="graph"></canvas>
-        <div class="legend">
-          <span><i style="background:var(--c-person)"></i>Participant</span>
-          <span><i style="background:var(--c-theme)"></i>Theme</span>
-          <span><i style="background:var(--c-hyp)"></i>Hypothesis</span>
-          <span><i style="background:var(--c-core)"></i>Core</span>
-        </div>
+        <div class="layers" id="layers"></div>
         <div class="node-panel" id="nodePanel"></div>
       </div>
     </section>
@@ -78,6 +74,17 @@
       <div class="grid" id="themeGrid"></div>
     </section>
 
+    <!-- UNDERCURRENTS -->
+    <section class="view" id="view-undercurrents">
+      <header class="view-head">
+        <h1>Undercurrents</h1>
+        <p class="muted">The deeper patterns under the themes: mirroring, inheritance, belonging, avoidance. Edit in <code>deep.js</code>.</p>
+      </header>
+      <div id="underList"></div>
+      <h2>Theory</h2>
+      <div class="grid" id="theoryGrid"></div>
+    </section>
+
     <!-- HYPOTHESES -->
     <section class="view" id="view-hypotheses">
       <header class="view-head"><h1>Hypotheses</h1></header>
@@ -97,9 +104,11 @@
     <section class="view" id="view-formlab">
       <header class="view-head">
         <h1>Form Lab</h1>
-        <p class="muted">Material swatches and prototype tests. Log reactions as you go.</p>
+        <p class="muted">Materials, forms, interactions, projection, sound and the ritual arc. Click a status pill to cycle idea → testing → done → cut.</p>
+        <p class="muted" id="formCounts" style="font-size:13px;margin-top:4px"></p>
       </header>
-      <div class="grid" id="formGrid"></div>
+      <div class="filters" id="formFilters"></div>
+      <div id="formSections"></div>
     </section>
 
     <!-- NOTES -->
@@ -122,6 +131,7 @@
   </main>
 
   <script src="data.js"></script>
+  <script src="deep.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

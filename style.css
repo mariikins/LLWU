@@ -10,6 +10,10 @@
   --c-theme: #8fa8c8;
   --c-hyp: #c9b37e;
   --c-core: #e07a7a;
+  --c-under: #a78bdb;
+  --c-echo: #e8c4d8;
+  --c-theory: #6fb5a8;
+  --c-form: #8d8c99;
   --radius: 10px;
   --serif: "Cormorant Garamond", Georgia, serif;
   --sans: "Inter", system-ui, sans-serif;
@@ -170,3 +174,37 @@ h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
   h1 { font-size: 32px; }
   .node-panel { width: calc(100% - 28px); }
 }
+
+/* Layers */
+.layers { position: absolute; left: 12px; bottom: 12px; right: 12px; display: flex; flex-wrap: wrap; gap: 6px; pointer-events: none; }
+.layer {
+  pointer-events: auto; background: rgba(21,21,24,0.85); border: 1px solid var(--line); color: var(--muted);
+  font: inherit; font-size: 12px; padding: 4px 10px; border-radius: 99px; cursor: pointer; opacity: 0.55;
+}
+.layer.on, #fitBtn { opacity: 1; color: var(--text); }
+.layer i { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.node-link { cursor: pointer; }
+.node-link:hover { border-color: currentColor; }
+
+/* Undercurrents */
+.under-card { margin-bottom: 16px; border-left: 2px solid var(--c-under); }
+.tag.under { color: var(--c-under); border-color: #3a3150; }
+.tag.theory { color: var(--c-theory); border-color: #2a4440; }
+.echo-box { border: 1px dashed #5a4552; border-radius: 8px; padding: 10px 12px; margin: 12px 0; font-size: 14px; display: flex; flex-direction: column; gap: 6px; color: var(--text); }
+.echo-box strong { color: var(--c-echo); font-weight: 500; }
+.provocation { margin-top: 12px; padding: 10px 12px; background: var(--bg-3); border-radius: 8px; font-family: var(--serif); font-size: 18px; font-style: italic; }
+.provocation span, .try span { display: block; font-family: var(--sans); font-style: normal; font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 2px; }
+
+/* Form lab */
+.form-section { margin-bottom: 30px; }
+.form-card { position: relative; }
+.form-card h3 { padding-right: 70px; }
+.try { margin: 10px 0; font-size: 14px; color: var(--muted); }
+.pill {
+  position: absolute; top: 14px; right: 14px; font: inherit; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em;
+  padding: 2px 9px; border-radius: 99px; border: 1px solid var(--line); background: var(--bg-3); color: var(--muted); cursor: pointer;
+}
+.pill.testing { color: var(--c-hyp); border-color: #4a412c; }
+.pill.done { color: var(--c-theory); border-color: #2a4440; }
+.pill.cut { color: #6a6a72; text-decoration: line-through; }
+.form-card.st-cut { opacity: 0.45; }
