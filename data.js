@@ -23,7 +23,7 @@ const DATA = {
     ],
   },
 
-  participants: ["Leila", "Alex", "Maya"],
+  participants: ["Participant 1", "Participant 2", "Participant 3"],
 
   themes: [
     { id: "hiding", name: "Hiding", desc: "Concealment as the first response to shame." },
@@ -75,45 +75,45 @@ const DATA = {
 
   // q = question index (0-based), p = participant
   quotes: [
-    { q: 0, p: "Leila", t: ["learned", "evaluation"], text: "Embarrassment is like, you did something awkward. Shame is when it feels like the awkward thing says something about you. It's not that you messed up, it's that something's wrong with you." },
-    { q: 0, p: "Alex", t: ["editing"], text: "Shame is feeling like part of you needs to be edited before anyone can see it." },
-    { q: 0, p: "Maya", t: ["hiding"], text: "For me shame is hiding. Even if I know I didn't do anything wrong, I still don't want anyone to find out." },
+    { q: 0, p: "Participant 1", t: ["learned", "evaluation"], text: "Embarrassment is like, you did something awkward. Shame is when it feels like the awkward thing says something about you. It's not that you messed up, it's that something's wrong with you." },
+    { q: 0, p: "Participant 2", t: ["editing"], text: "Shame is feeling like part of you needs to be edited before anyone can see it." },
+    { q: 0, p: "Participant 3", t: ["hiding"], text: "For me shame is hiding. Even if I know I didn't do anything wrong, I still don't want anyone to find out." },
 
-    { q: 1, p: "Leila", t: ["learned", "evaluation"], text: "My skin, mostly. People used to comment on it when I was younger. Nobody was really mean about it, but after a while I just started noticing it myself." },
-    { q: 1, p: "Alex", t: ["editing"], text: "Parts of my personality. I kind of make myself more digestible depending on who I'm around." },
-    { q: 1, p: "Maya", t: ["learned"], text: "My body changing as I get older. I don't think I hate it, I just feel like I'm supposed to be doing something about it." },
+    { q: 1, p: "Participant 1", t: ["learned", "evaluation"], text: "My skin, mostly. People used to comment on it when I was younger. Nobody was really mean about it, but after a while I just started noticing it myself." },
+    { q: 1, p: "Participant 2", t: ["editing"], text: "Parts of my personality. I kind of make myself more digestible depending on who I'm around." },
+    { q: 1, p: "Participant 3", t: ["learned"], text: "My body changing as I get older. I don't think I hate it, I just feel like I'm supposed to be doing something about it." },
 
-    { q: 2, p: "Leila", t: ["learned", "evaluation"], text: "Probably middle school. Suddenly everyone was looking at everyone. It wasn't one mean comment, it was more like figuring out which things got complimented." },
-    { q: 2, p: "Alex", t: ["learned", "editing"], text: "Mostly from people's reactions. Nobody really rejected me, they'd just get uncomfortable, so I learned what not to show." },
-    { q: 2, p: "Maya", t: ["learned"], text: "My mom talked about her looks all the time. I don't think she meant to teach me anything, but I picked up that your body is a project you're supposed to keep fixing." },
+    { q: 2, p: "Participant 1", t: ["learned", "evaluation"], text: "Probably middle school. Suddenly everyone was looking at everyone. It wasn't one mean comment, it was more like figuring out which things got complimented." },
+    { q: 2, p: "Participant 2", t: ["learned", "editing"], text: "Mostly from people's reactions. Nobody really rejected me, they'd just get uncomfortable, so I learned what not to show." },
+    { q: 2, p: "Participant 3", t: ["learned"], text: "My mom talked about her looks all the time. I don't think she meant to teach me anything, but I picked up that your body is a project you're supposed to keep fixing." },
 
-    { q: 3, p: "Leila", t: ["hiding", "evaluation"], text: "I change outfits, take pics and delete them, or just avoid mirrors on bad days. Sometimes I go online, which probably makes it worse." },
-    { q: 3, p: "Alex", t: ["shape"], text: "I overthink it. I turn it into a theory or make art about it. That's easier than just admitting it hurts." },
-    { q: 3, p: "Maya", t: ["hiding"], text: "I just stay busy. I wouldn't say I'm ashamed, but there's stuff I avoid thinking about because I don't know what to do with it." },
+    { q: 3, p: "Participant 1", t: ["hiding", "evaluation"], text: "I change outfits, take pics and delete them, or just avoid mirrors on bad days. Sometimes I go online, which probably makes it worse." },
+    { q: 3, p: "Participant 2", t: ["shape"], text: "I overthink it. I turn it into a theory or make art about it. That's easier than just admitting it hurts." },
+    { q: 3, p: "Participant 3", t: ["hiding"], text: "I just stay busy. I wouldn't say I'm ashamed, but there's stuff I avoid thinking about because I don't know what to do with it." },
 
-    { q: 4, p: "Leila", t: ["familiarity", "evaluation"], text: "I started seeing pics of women with the same features I hated on myself, and I thought they looked beautiful. Then I realized I was holding myself to a totally different standard." },
-    { q: 4, p: "Alex", t: ["familiarity"], text: "I met people who had the same traits I'd been hiding. Suddenly it wasn't proof that I was weird, it was just part of being a person." },
-    { q: 4, p: "Maya", t: ["familiarity"], text: "I think familiarity changes things. Sometimes something stops feeling like a problem once you've spent enough time with it." },
+    { q: 4, p: "Participant 1", t: ["familiarity", "evaluation"], text: "I started seeing pics of women with the same features I hated on myself, and I thought they looked beautiful. Then I realized I was holding myself to a totally different standard." },
+    { q: 4, p: "Participant 2", t: ["familiarity"], text: "I met people who had the same traits I'd been hiding. Suddenly it wasn't proof that I was weird, it was just part of being a person." },
+    { q: 4, p: "Participant 3", t: ["familiarity"], text: "I think familiarity changes things. Sometimes something stops feeling like a problem once you've spent enough time with it." },
 
-    { q: 5, p: "Leila", t: ["shape"], text: "Maybe pain makes you notice stuff you'd normally ignore. When you're really sad, tiny things feel huge. A song can explain a feeling you couldn't." },
-    { q: 5, p: "Alex", t: ["editing", "shape"], text: "Pain kind of strips away the version of you that you perform for people. What's left is more real. But suffering doesn't automatically make you a better artist." },
-    { q: 5, p: "Maya", t: ["shape"], text: "Art gives pain a shape. Something overwhelming turns into a song or a painting you can actually look at. But I don't think you have to suffer to make something meaningful." },
+    { q: 5, p: "Participant 1", t: ["shape"], text: "Maybe pain makes you notice stuff you'd normally ignore. When you're really sad, tiny things feel huge. A song can explain a feeling you couldn't." },
+    { q: 5, p: "Participant 2", t: ["editing", "shape"], text: "Pain kind of strips away the version of you that you perform for people. What's left is more real. But suffering doesn't automatically make you a better artist." },
+    { q: 5, p: "Participant 3", t: ["shape"], text: "Art gives pain a shape. Something overwhelming turns into a song or a painting you can actually look at. But I don't think you have to suffer to make something meaningful." },
 
-    { q: 6, p: "Leila", t: ["safety", "shape"], text: "Sometimes a song makes me feel understood without having to tell anyone what's wrong. I get to feel it without explaining it." },
-    { q: 6, p: "Alex", t: ["shape"], text: "When I make art, I get to put the feeling somewhere outside my body. It doesn't go away, but it stops being this shapeless thing inside me." },
-    { q: 6, p: "Maya", t: ["shape", "safety"], text: "I've stood in front of a painting and just gotten emotional out of nowhere. I didn't really get why. It just felt like something got recognized." },
+    { q: 6, p: "Participant 1", t: ["safety", "shape"], text: "Sometimes a song makes me feel understood without having to tell anyone what's wrong. I get to feel it without explaining it." },
+    { q: 6, p: "Participant 2", t: ["shape"], text: "When I make art, I get to put the feeling somewhere outside my body. It doesn't go away, but it stops being this shapeless thing inside me." },
+    { q: 6, p: "Participant 3", t: ["shape", "safety"], text: "I've stood in front of a painting and just gotten emotional out of nowhere. I didn't really get why. It just felt like something got recognized." },
 
-    { q: 7, p: "Leila", t: ["evaluation"], text: "Feeling like I'm always being judged. Even when no one's looking, I picture how I'd look to someone else." },
-    { q: 7, p: "Alex", t: ["editing"], text: "Feeling like I have to pick which version of me gets to exist in each space." },
-    { q: 7, p: "Maya", t: ["learned"], text: "Probably feeling like time's passing and I'm supposed to be a more complete person by now. Not sure if that counts." },
+    { q: 7, p: "Participant 1", t: ["evaluation"], text: "Feeling like I'm always being judged. Even when no one's looking, I picture how I'd look to someone else." },
+    { q: 7, p: "Participant 2", t: ["editing"], text: "Feeling like I have to pick which version of me gets to exist in each space." },
+    { q: 7, p: "Participant 3", t: ["learned"], text: "Probably feeling like time's passing and I'm supposed to be a more complete person by now. Not sure if that counts." },
 
-    { q: 8, p: "Leila", t: ["containment"], text: "Something soft with a hard shell around it. It's trying to push out, but every time it moves, the shell pushes back." },
-    { q: 8, p: "Alex", t: ["containment", "editing"], text: "Something that keeps changing shape to fit into a space that's too small. It might look pretty, but it'd be uncomfortable to watch." },
-    { q: 8, p: "Maya", t: ["containment", "safety"], text: "Something kind of organic. Like you can't tell if you're supposed to touch it or stay away." },
+    { q: 8, p: "Participant 1", t: ["containment"], text: "Something soft with a hard shell around it. It's trying to push out, but every time it moves, the shell pushes back." },
+    { q: 8, p: "Participant 2", t: ["containment", "editing"], text: "Something that keeps changing shape to fit into a space that's too small. It might look pretty, but it'd be uncomfortable to watch." },
+    { q: 8, p: "Participant 3", t: ["containment", "safety"], text: "Something kind of organic. Like you can't tell if you're supposed to touch it or stay away." },
 
-    { q: 9, p: "Leila", t: ["safety"], text: "I'd want to feel understood, but not like it's telling me everything's beautiful. That feels fake." },
-    { q: 9, p: "Alex", t: ["safety", "shape"], text: "I want to be challenged. I don't want it to fix the feeling for me, just help me see it differently." },
-    { q: 9, p: "Maya", t: ["safety"], text: "I'd want to feel safe enough to stay with it. I don't need to leave happier, I just don't want to feel tricked into being vulnerable." },
+    { q: 9, p: "Participant 1", t: ["safety"], text: "I'd want to feel understood, but not like it's telling me everything's beautiful. That feels fake." },
+    { q: 9, p: "Participant 2", t: ["safety", "shape"], text: "I want to be challenged. I don't want it to fix the feeling for me, just help me see it differently." },
+    { q: 9, p: "Participant 3", t: ["safety"], text: "I'd want to feel safe enough to stay with it. I don't need to leave happier, I just don't want to feel tricked into being vulnerable." },
   ],
 
   caseStudies: [

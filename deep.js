@@ -9,8 +9,8 @@ DATA.undercurrents = [
     id: "mirror",
     name: "The Internal Mirror",
     desc: "Other people's gaze slowly becomes your own. Eventually no one needs to be watching for you to feel watched.",
-    evidence: [[2, "Leila"], [8, "Leila"], [4, "Leila"], [3, "Alex"]],
-    reading: "Leila 'started noticing it myself' after others commented, and now imagines how she looks 'even when no one's looking.' She avoids mirrors on bad days. Alex learned what not to show from other people's discomfort. The mirror is both the wound and the thing avoided.",
+    evidence: [[2, "Participant 1"], [8, "Participant 1"], [4, "Participant 1"], [3, "Participant 2"]],
+    reading: "Participant 1 'started noticing it myself' after others commented, and now imagines how they look 'even when no one's looking.' They avoid mirrors on bad days. Participant 2 learned what not to show from other people's discomfort. The mirror is both the wound and the thing avoided.",
     theory: ["cooley", "berger", "lacan"],
     themes: ["evaluation", "learned", "hiding"],
     provocation: "What if the sculpture works as a mirror that refuses to judge, reflecting the viewer back slowly, softly, and only once they stay?",
@@ -19,8 +19,8 @@ DATA.undercurrents = [
     id: "inheritance",
     name: "Inherited Shame",
     desc: "Shame is passed down without anyone saying it out loud. It's learned by watching the people you love watch themselves.",
-    evidence: [[3, "Maya"], [2, "Maya"], [3, "Leila"]],
-    reading: "Maya's mother never meant to teach her anything, but 'your body is a project you're supposed to keep fixing' was absorbed anyway. Leila learned 'which things got complimented.' Nobody delivered the lesson directly.",
+    evidence: [[3, "Participant 3"], [2, "Participant 3"], [3, "Participant 1"]],
+    reading: "Participant 3's mother never meant to teach them anything, but 'your body is a project you're supposed to keep fixing' was absorbed anyway. Participant 1 learned 'which things got complimented.' Nobody delivered the lesson directly.",
     theory: ["bandura", "berger"],
     themes: ["learned"],
     provocation: "Layered casts or strata, with older 'generations' of the form visible beneath the surface.",
@@ -29,8 +29,8 @@ DATA.undercurrents = [
     id: "double",
     name: "The Double Standard",
     desc: "The same feature is beautiful on someone else and shameful on yourself.",
-    evidence: [[5, "Leila"], [5, "Alex"]],
-    reading: "Leila found features she criticized on herself beautiful on other women. Alex's traits stopped being 'proof that I was weird' once he saw them in others. Compassion flows outward but not inward.",
+    evidence: [[5, "Participant 1"], [5, "Participant 2"]],
+    reading: "Participant 1 found features they criticized on themselves beautiful on other women. Participant 2's traits stopped being 'proof that I was weird' once they saw them in others. Compassion flows outward but not inward.",
     theory: ["neff", "zajonc"],
     themes: ["familiarity", "evaluation"],
     provocation: "Let the viewer meet the 'ugly' form as something other than themselves first, then reveal it as theirs.",
@@ -39,8 +39,8 @@ DATA.undercurrents = [
     id: "conditional",
     name: "Conditional Belonging",
     desc: "Being accepted feels like it depends on editing yourself. Showing the whole self risks being left.",
-    evidence: [[1, "Alex"], [2, "Alex"], [8, "Alex"], [9, "Alex"]],
-    reading: "Alex makes himself 'more digestible' and feels he has to 'pick which version of me gets to exist.' The abyss isn't one trait. It's the fear that the unedited self would push people away. This is close to abandonment fear.",
+    evidence: [[1, "Participant 2"], [2, "Participant 2"], [8, "Participant 2"], [9, "Participant 2"]],
+    reading: "Participant 2 makes themselves 'more digestible' and feels they have to 'pick which version of me gets to exist.' The abyss isn't one trait. It's the fear that the unedited self would push people away. This is close to abandonment fear.",
     theory: ["winnicott-false", "bowlby"],
     themes: ["editing", "containment"],
     provocation: "The form only reveals its soft interior if the viewer doesn't flinch or leave. Acceptance has to be mutual.",
@@ -49,8 +49,8 @@ DATA.undercurrents = [
     id: "avoidance",
     name: "Avoidance as Survival",
     desc: "Everyone has a way of not looking: hiding, intellectualizing or staying busy.",
-    evidence: [[4, "Leila"], [4, "Alex"], [4, "Maya"]],
-    reading: "All three described a different defense: Leila deletes photos and avoids mirrors, Alex turns it into theory, Maya keeps busy. None of them described sitting with the feeling directly.",
+    evidence: [[4, "Participant 1"], [4, "Participant 2"], [4, "Participant 3"]],
+    reading: "All three described a different defense: Participant 1 deletes photos and avoids mirrors, Participant 2 turns it into theory, Participant 3 keeps busy. None of them described sitting with the feeling directly.",
     theory: ["afreud", "brown"],
     themes: ["hiding", "shape"],
     provocation: "The work pulls back if you rush it. It can only be approached slowly, which teaches the opposite of avoidance.",
@@ -59,8 +59,8 @@ DATA.undercurrents = [
     id: "unfinished",
     name: "The Unfinished Self",
     desc: "The body as a project, and the sense that you're supposed to be 'complete' by now.",
-    evidence: [[2, "Maya"], [3, "Maya"], [8, "Maya"]],
-    reading: "Maya doesn't hate her changing body. She just feels she's 'supposed to be doing something about it,' and that time is passing before she's become 'a more complete person.'",
+    evidence: [[2, "Participant 3"], [3, "Participant 3"], [8, "Participant 3"]],
+    reading: "Participant 3 doesn't hate their changing body. They just feel they're 'supposed to be doing something about it,' and that time is passing before they've become 'a more complete person.'",
     theory: ["berger"],
     themes: ["learned"],
     provocation: "A form that never finishes forming: visible armature, open seams, slow continuous change.",
@@ -69,8 +69,8 @@ DATA.undercurrents = [
     id: "ambivalence",
     name: "Attraction / Repulsion",
     desc: "Not knowing whether to touch or stay away. Beautiful and uncomfortable at once.",
-    evidence: [[9, "Maya"], [9, "Alex"], [9, "Leila"]],
-    reading: "Maya imagines something where 'you can't tell if you're supposed to touch it or stay away.' Alex's form 'might look pretty, but it'd be uncomfortable to watch.' This ambivalence is exactly where the installation lives.",
+    evidence: [[9, "Participant 3"], [9, "Participant 2"], [9, "Participant 1"]],
+    reading: "Participant 3 imagines something where 'you can't tell if you're supposed to touch it or stay away.' Participant 2's form 'might look pretty, but it'd be uncomfortable to watch.' This ambivalence is exactly where the installation lives.",
     theory: ["kristeva", "uncanny"],
     themes: ["containment"],
     provocation: "Materials that sit between flesh and object, alive and inert, so the first reaction is uncertainty rather than disgust.",
@@ -79,8 +79,8 @@ DATA.undercurrents = [
     id: "witnessed",
     name: "Being Witnessed",
     desc: "Wanting to be recognized without having to explain or perform.",
-    evidence: [[7, "Leila"], [7, "Maya"], [10, "Maya"], [10, "Leila"]],
-    reading: "Leila wants to be understood 'without explaining it.' Maya felt 'something got recognized' in front of a painting. But nobody wants false comfort. Being witnessed is not the same as being told it's all beautiful.",
+    evidence: [[7, "Participant 1"], [7, "Participant 3"], [10, "Participant 3"], [10, "Participant 1"]],
+    reading: "Participant 1 wants to be understood 'without explaining it.' Participant 3 felt 'something got recognized' in front of a painting. But nobody wants false comfort. Being witnessed is not the same as being told it's all beautiful.",
     theory: ["winnicott-holding", "brown"],
     themes: ["safety", "shape"],
     provocation: "The work responds to presence, not performance. Just being there is enough to change it.",
@@ -89,7 +89,7 @@ DATA.undercurrents = [
     id: "exposure",
     name: "Exposure Softens",
     desc: "Time and closeness change how something is seen.",
-    evidence: [[5, "Maya"], [5, "Alex"], [5, "Leila"]],
+    evidence: [[5, "Participant 3"], [5, "Participant 2"], [5, "Participant 1"]],
     reading: "All three described acceptance coming through exposure: seeing the trait in others, or simply having 'spent enough time with it.' This is the most direct mechanic the interviews offer.",
     theory: ["zajonc"],
     themes: ["familiarity"],
@@ -99,12 +99,12 @@ DATA.undercurrents = [
 
 /* ---------- ECHOES: where participants mirror each other ---------- */
 DATA.echoes = [
-  { id: "e1", name: "No single moment", a: [3, "Leila"], b: [3, "Alex"], note: "Neither remembers one insult. Both learned through accumulated reactions.", under: "mirror" },
-  { id: "e2", name: "Absorbed, not taught", a: [2, "Leila"], b: [3, "Maya"], note: "Nobody said anything cruel, and nobody meant to teach anything, but the lesson landed anyway.", under: "inheritance" },
-  { id: "e3", name: "Seeing it in others", a: [5, "Leila"], b: [5, "Alex"], note: "Both changed their view of themselves by seeing the same trait on someone else first.", under: "double" },
-  { id: "e4", name: "The container", a: [9, "Leila"], b: [9, "Alex"], note: "A soft thing pushing against a shell, and a thing squeezed into a space too small. Same image, two angles.", under: "conditional" },
-  { id: "e5", name: "Don't trick me", a: [10, "Leila"], b: [10, "Maya"], note: "Both want to be understood but distrust comfort that feels fake or manipulative.", under: "witnessed" },
-  { id: "e6", name: "Outside the body", a: [7, "Alex"], b: [6, "Maya"], note: "Art gives a shapeless feeling a form you can stand outside of and look at.", under: "witnessed" },
+  { id: "e1", name: "No single moment", a: [3, "Participant 1"], b: [3, "Participant 2"], note: "Neither remembers one insult. Both learned through accumulated reactions.", under: "mirror" },
+  { id: "e2", name: "Absorbed, not taught", a: [2, "Participant 1"], b: [3, "Participant 3"], note: "Nobody said anything cruel, and nobody meant to teach anything, but the lesson landed anyway.", under: "inheritance" },
+  { id: "e3", name: "Seeing it in others", a: [5, "Participant 1"], b: [5, "Participant 2"], note: "Both changed their view of themselves by seeing the same trait on someone else first.", under: "double" },
+  { id: "e4", name: "The container", a: [9, "Participant 1"], b: [9, "Participant 2"], note: "A soft thing pushing against a shell, and a thing squeezed into a space too small. Same image, two angles.", under: "conditional" },
+  { id: "e5", name: "Don't trick me", a: [10, "Participant 1"], b: [10, "Participant 3"], note: "Both want to be understood but distrust comfort that feels fake or manipulative.", under: "witnessed" },
+  { id: "e6", name: "Outside the body", a: [7, "Participant 2"], b: [6, "Participant 3"], note: "Art gives a shapeless feeling a form you can stand outside of and look at.", under: "witnessed" },
 ];
 
 /* ---------- THEORY ---------- */
@@ -149,9 +149,9 @@ DATA.formLab = {
     { type: "material", name: "Stretched fabric over armature", body: "Skin pulled taut over visible bones.", try: "Nylon or lycra over bent steel rod; light it from inside.", under: ["unfinished"] },
 
     // Form studies
-    { type: "form", name: "The Shell", body: "From Leila: 'something soft with a hard shell around it… every time it moves, the shell pushes back.'", try: "Inflatable silicone bladder inside a rigid metal cage.", under: ["conditional"] },
-    { type: "form", name: "The Shapeshifter", body: "From Alex: 'something that keeps changing shape to fit into a space that's too small.'", try: "Soft form forced into a narrow frame; let it slowly expand when the viewer stays.", under: ["conditional"] },
-    { type: "form", name: "Touch or Stay Away", body: "From Maya: a form you can't tell whether to approach or avoid.", try: "Test which surface qualities trigger hesitation versus curiosity.", under: ["ambivalence"] },
+    { type: "form", name: "The Shell", body: "From Participant 1: 'something soft with a hard shell around it… every time it moves, the shell pushes back.'", try: "Inflatable silicone bladder inside a rigid metal cage.", under: ["conditional"] },
+    { type: "form", name: "The Shapeshifter", body: "From Participant 2: 'something that keeps changing shape to fit into a space that's too small.'", try: "Soft form forced into a narrow frame; let it slowly expand when the viewer stays.", under: ["conditional"] },
+    { type: "form", name: "Touch or Stay Away", body: "From Participant 3: a form you can't tell whether to approach or avoid.", try: "Test which surface qualities trigger hesitation versus curiosity.", under: ["ambivalence"] },
     { type: "form", name: "The Broken Mirror", body: "A reflective surface fragmented across a fleshy body.", try: "Mirror pieces that only show the viewer from close up.", under: ["mirror"] },
     { type: "form", name: "Strata", body: "Layered casts, with older layers showing through.", try: "Cast several bodies or body parts and layer them translucently.", under: ["inheritance"] },
     { type: "form", name: "The Unfinished", body: "A form that looks mid-process: open seams, visible armature.", try: "Leave part of the sculpture as raw structure.", under: ["unfinished"] },
@@ -189,7 +189,7 @@ DATA.formLab = {
 
     // Open questions
     { type: "question", name: "Should viewers see themselves literally?", body: "A real reflection versus an abstract echo.", try: "A/B test a mirror version against a silhouette version.", under: ["mirror"] },
-    { type: "question", name: "Ugly without exploiting shame?", body: "How to make it uncomfortable without humiliating anyone.", try: "Ask testers whether they felt tricked (Maya's concern).", under: ["witnessed"] },
+    { type: "question", name: "Ugly without exploiting shame?", body: "How to make it uncomfortable without humiliating anyone.", try: "Ask testers whether they felt tricked (Participant 3's concern).", under: ["witnessed"] },
     { type: "question", name: "How long is long enough?", body: "How much dwell time does a perception shift actually take?", try: "Time testers and ask before/after how they'd describe the form.", under: ["exposure"] },
     { type: "question", name: "What does the work give back?", body: "What does someone leave with?", try: "Exit prompt: one word for how you feel now.", under: ["witnessed"] },
     { type: "question", name: "Adolescents vs. adult women?", body: "Do the two communities react differently?", try: "Compare form responses by age range.", under: ["inheritance"] },
@@ -248,8 +248,8 @@ DATA.undercurrents.push(
     id: "caging",
     name: "The Caging Embrace",
     desc: "Love that holds too tight: protecting, correcting, fixing. It comes from love but teaches shame.",
-    evidence: [[3, "Maya"], [2, "Alex"], [9, "Leila"], [1, "Alex"]],
-    reading: "Maya's mom loved her and still passed on the idea that a body is a project to fix. Alex reshapes himself so the people around him can hold him. Leila's soft thing inside a shell that pushes back is an embrace that has turned into a cage. None of this comes from cruelty.",
+    evidence: [[3, "Participant 3"], [2, "Participant 2"], [9, "Participant 1"], [1, "Participant 2"]],
+    reading: "Participant 3's mom loved them and still passed on the idea that a body is a project to fix. Participant 2 reshapes themselves so the people around them can hold them. Participant 1's soft thing inside a shell that pushes back is an embrace that has turned into a cage. None of this comes from cruelty.",
     theory: ["bowlby", "winnicott-false"],
     themes: ["learned", "containment", "editing"],
     provocation: "The same arms around the form, lit cold and pulled tight, read as bars.",
@@ -258,7 +258,7 @@ DATA.undercurrents.push(
     id: "elevating",
     name: "The Elevating Embrace",
     desc: "Love that holds you up instead of in place. Warm, balanced, and celebrating you as you are.",
-    evidence: [[5, "Leila"], [5, "Alex"], [10, "Maya"], [7, "Maya"]],
+    evidence: [[5, "Participant 1"], [5, "Participant 2"], [10, "Participant 3"], [7, "Participant 3"]],
     reading: "What changed things for participants wasn't being fixed. It was being met: seeing their traits celebrated on other people, being recognized, feeling safe enough to stay. Love that elevates doesn't ask the person to change first.",
     theory: ["rogers", "hooks", "winnicott-holding", "grandin"],
     themes: ["familiarity", "safety"],
@@ -267,7 +267,7 @@ DATA.undercurrents.push(
 );
 
 DATA.echoes.push({
-  id: "e7", name: "Held vs. held back", a: [9, "Leila"], b: [10, "Maya"],
+  id: "e7", name: "Held vs. held back", a: [9, "Participant 1"], b: [10, "Participant 3"],
   note: "A shell that pushes back versus a space safe enough to stay in. Two kinds of holding.", under: "caging",
 });
 
@@ -292,7 +292,7 @@ DATA.formLab.items.push(
   { type: "embrace", name: "Weighted Warmth", body: "A heated, weighted surface the viewer can rest a hand or arm in, so the sculpture embraces them back.", try: "Weighted fabric over a low-voltage heating pad. Look at Temple Grandin's squeeze machine as a reference.", under: ["elevating"] },
   { type: "embrace", name: "The Viewer Embraces Back", body: "The last act is the viewer choosing to hold the form they rejected at the start.", try: "Shape part of the form to fit arms. Track how many testers actually hug it.", under: ["elevating", "exposure"] },
   { type: "question", name: "How does someone tell the cage from the cradle?", body: "What makes the same gesture feel like holding in vs. holding up: pressure, time, whether you can leave?", try: "Show testers the armature in both states and ask them to describe what it's doing to the form.", under: ["caging", "elevating"] },
-  { type: "question", name: "Does the warm ending feel earned?", body: "Love should feel stronger than shame, not like a forced happy ending. Leila: 'That feels fake.'", try: "Ask testers whether the transformation felt believable.", under: ["elevating", "witnessed"] }
+  { type: "question", name: "Does the warm ending feel earned?", body: "Love should feel stronger than shame, not like a forced happy ending. Participant 1: 'That feels fake.'", try: "Ask testers whether the transformation felt believable.", under: ["elevating", "witnessed"] }
 );
 
 // The ritual arc now passes through the embrace

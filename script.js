@@ -12,8 +12,9 @@ function show(view) {
   if (el) el.classList.add("active");
   $("#sidebar").classList.remove("open");
   if (view === "graph") { resizeGraph(); setTimeout(fit, 50); }
+  if (view === "explore" && typeof drawExLines === "function") setTimeout(drawExLines, 30);
 }
-window.addEventListener("hashchange", () => show(location.hash.slice(1) || "graph"));
+window.addEventListener("hashchange", () => show(location.hash.slice(1) || "explore"));
 $("#menuBtn").onclick = () => $("#sidebar").classList.toggle("open");
 
 /* ---------- Quote card ---------- */
@@ -476,17 +477,6 @@ $("#exportNotes").onclick = () => {
   a.click();
 };
 
-/* ---------- Search ---------- */
-$("#search").addEventListener("input", (e) => {
-  const term = e.target.value.trim().toLowerCase();
-  if (!term) return;
-  location.hash = "interviews";
-  filterP = "All";
-  renderInterviews();
-  $$("#interviewList .q-block").forEach((b) => {
-    b.style.display = b.textContent.toLowerCase().includes(term) ? "" : "none";
-  });
-});
 
 /* ---------- Graph (Obsidian-style force layout) ---------- */
 const canvas = $("#graph");
@@ -785,4 +775,4 @@ resizeGraph();
 buildGraph();
 window.addEventListener("resize", () => { resizeGraph(); });
 loop();
-show(location.hash.slice(1) || "graph");
+show(location.hash.slice(1) || "explore");
