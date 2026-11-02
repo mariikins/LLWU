@@ -40,11 +40,122 @@ function renderOverview() {
     <div class="grid">${p.interaction.map((i) => `<div class="card">${i}</div>`).join("")}</div>
     <h2>At a glance</h2>
     <div class="grid">
-      <div class="card"><h3>${DATA.participants.length}</h3><span class="muted">participants</span></div>
+      <div class="card"><h3>${DATA.participants.length + (DATA.survey?.n || 0)}</h3><span class="muted">participants (${DATA.participants.length} interviews + ${DATA.survey?.n || 0} survey)</span></div>
       <div class="card"><h3>${DATA.quotes.length}</h3><span class="muted">quotes</span></div>
       <div class="card"><h3>${DATA.themes.length}</h3><span class="muted">themes</span></div>
       <div class="card"><h3>${DATA.hypotheses.length}</h3><span class="muted">hypotheses</span></div>
     </div>`;
+}
+
+/* ---------- Survey ---------- */
+const CAT = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9"];
+const hypLabel = (id) => "H" + (DATA.hypotheses.findIndex((h) => h.id === id) + 1);
+
+function liftSVG(e) {
+  const roles = ["go", "lift", "lift", "lift", "lift", "lift", "hold", "hold", "lift", "lift", "lift", "lift", "go"];
+  const lifts = [[-40, -150], [-20, -195], [-10, -130], [5, -175], [15, -210], [10, -160], [25, -185], [35, -140], [45, -200]];
+  let li = 0;
+  const dots = roles.map((r, i) => {
+    const t = 0.18 + (i / (roles.length - 1)) * 0.64;
+    const x = (1 - t) ** 2 * 130 + 2 * (1 - t) * t * 300 + t ** 2 * 470;
+    const y = (1 - t) ** 2 * 230 + 2 * (1 - t) * t * 320 + t ** 2 * 230 - 10;
+    if (r === "lift") { const [dx, dy] = lifts[li++]; return `<circle class="dot-lift" cx="${x}" cy="${y}" r="7" style="--dx:${dx}px;--dy:${dy}px;--d:${(li * 0.35).toFixed(2)}s"><title>Lift you</title></circle>`; }
+    if (r === "hold") return `<circle class="dot-hold" cx="${x}" cy="${y}" r="7" style="--d:${i * 0.4}s"><title>Hold you</title></circle>`;
+    return `<circle class="dot-go" cx="${x}" cy="${y}" r="7" style="--dx:${i === 0 ? -150 : 150}px"><title>Let you go</title></circle>`;
+  }).join("");
+  return `<svg class="lift-svg" viewBox="0 0 600 340" role="img" aria-label="${e.lift} of ${e.n} want to be lifted, ${e.hold} held, ${e.go} let go">
+    <defs><radialGradient id="liftGlow" cx="50%" cy="20%" r="60%"><stop offset="0" stop-color="#f2a65a" stop-opacity=".22"/><stop offset="1" stop-color="#f2a65a" stop-opacity="0"/></radialGradient></defs>
+    <rect width="600" height="340" fill="url(#liftGlow)"/>
+    <path d="M130 230 Q300 320 470 230" fill="none" stroke="#f2a65a" stroke-opacity=".55" stroke-width="2" stroke-linecap="round"/>
+    ${dots}
+    <text x="300" y="34" text-anchor="middle" class="lift-t">Lift you · ${e.lift}</text>
+    <text x="300" y="322" text-anchor="middle" class="lift-t muted-t">Hold you · ${e.hold}</text>
+    <text x="555" y="250" text-anchor="end" class="lift-t muted-t">Let you go · ${e.go}</text>
+  </svg>`;
+}
+
+function renderSurvey() {
+  const S = DATA.survey;
+  const el = $("#view-survey");
+  if (!S || !el) return;
+  const total = DATA.participants.length + S.n;
+  const e = S.embrace;
+
+  const waffle = (d) => {
+    const cells = [];
+    d.cats.forEach(([name, c], ci) => { for (let k = 0; k < c; k++) cells.push(`<i style="background:${CAT[ci]}" title="${esc(name)}: ${c} of ${d.total}"></i>`); });
+    return `<div class="waffle-row">
+      <div class="w-label">${d.label}</div>
+      <div class="w-cells">${cells.join("")}</div>
+      <div class="w-legend">${d.cats.map(([n, c], ci) => `<span><i style="background:${CAT[ci]}"></i>${esc(n)} <b>${c}</b></span>`).join("")}</div>
+    </div>`;
+  };
+
+  const c = S.conflict;
+  const bar = `<div class="sbar">${c.cats.map(([n, v], i) => `<div style="flex:${v};background:${CAT[i]}" title="${esc(n)}: ${v} of ${c.n}"></div>`).join("")}</div>
+    <div class="w-legend" style="margin-top:10px">${c.cats.map(([n, v], i) => `<span><i style="background:${CAT[i]}"></i>${esc(n)} <b>${v}</b></span>`).join("")}</div>`;
+
+  const coping = S.coping.map(([w, n]) => `<span class="cope" style="font-size:${13 + n * 4}px">${esc(w)}</span>`).join("");
+
+  const findings = S.findings.map((f) => `<div class="card finding-card" id="finding-${f.id}">
+      <div class="f-stat">${esc(f.stat)}</div>
+      <div class="f-stat-l">${esc(f.statLabel)}</div>
+      <h3 style="margin-top:12px">${esc(f.title)}</h3>
+      <p class="muted" style="font-size:14px">${esc(f.evidence)}</p>
+      <p class="try"><span>For the form &amp; interaction</span>${esc(f.means)}</p>
+      <div>${f.under.map((u) => `<a class="tag under" href="#undercurrents">${underById(u)?.name || u}</a>`).join("")}${f.hyp.map((h) => `<a class="tag hyp" href="#hypotheses">${hypLabel(h)}</a>`).join("")}</div>
+    </div>`).join("");
+
+  const voices = S.sections.map((s) => `<div class="voice-group">
+      <div class="q-title">${esc(s.name)}</div>
+      ${s.quotes.map((q) => `<div class="voice">“${esc(q)}”</div>`).join("")}
+    </div>`).join("");
+
+  el.innerHTML = `
+    <header class="view-head">
+      <div class="q-title" style="color:var(--c-survey)">Google Form · ${S.collected}</div>
+      <h1>Survey</h1>
+      <p class="muted">${S.n} anonymous respondents, 18 and older. Every answer was optional.</p>
+    </header>
+
+    <div class="stat-row">
+      <div class="card stat"><div class="f-stat">${S.n}</div><div class="f-stat-l">survey respondents</div></div>
+      <div class="card stat"><div class="f-stat">${total}</div><div class="f-stat-l">total participants (${DATA.participants.length} interviews + ${S.n} survey)</div></div>
+      <div class="card stat"><div class="f-stat">${Math.round((e.lift / e.n) * 100)}%</div><div class="f-stat-l">want an embrace that lifts them</div></div>
+      <div class="card stat"><div class="f-stat">${S.findings.length}</div><div class="f-stat-l">findings that shape the work</div></div>
+    </div>
+
+    <div class="card lift-card">
+      ${liftSVG(e)}
+      <div class="lift-text">
+        <div class="q-title" style="color:var(--c-embrace)">If a project could embrace you…</div>
+        <div class="f-stat" style="font-size:64px">${e.lift} <span style="font-size:28px;color:var(--muted)">of ${e.n}</span></div>
+        <p>want it to <strong>lift</strong> them. Only ${e.hold} want to be held, and ${e.go} want to be let go.</p>
+        <p class="muted" style="margin-top:10px">This is the clearest signal in the data: the elevating embrace isn't just the thesis argument, it's what people asked for.</p>
+      </div>
+    </div>
+
+    <h2>Who answered</h2>
+    <div class="card">${S.demographics.map(waffle).join("")}</div>
+
+    <div class="two-col">
+      <div>
+        <h2>What resolves conflict</h2>
+        <div class="card">${bar}<p class="muted" style="font-size:13px;margin-top:10px">${c.n} responses</p></div>
+      </div>
+      <div>
+        <h2>What helped in the hardest times</h2>
+        <div class="card cope-cloud">${coping}</div>
+      </div>
+    </div>
+
+    <h2>What the data means for the work</h2>
+    <div class="grid">${findings}</div>
+
+    <h2>Voices</h2>
+    <div class="voices">${voices}</div>
+
+    <p class="muted" style="font-size:13px;margin-top:24px">${esc(S.note)}</p>`;
 }
 
 /* ---------- Interviews ---------- */
@@ -141,6 +252,7 @@ function renderUnder() {
         <p>${u.desc}</p>
         <p class="muted" style="margin-top:10px">${esc(u.reading)}</p>
         ${quotes.map((q) => `<div class="quote" style="font-size:17px">“${esc(q.text)}”<div class="quote-meta">— ${q.p} · Q${q.q + 1}</div></div>`).join("")}
+        ${(u.survey || []).map((t) => `<div class="quote survey-q">“${esc(t)}”<div class="quote-meta">— survey respondent</div></div>`).join("")}
         ${echoes.length ? `<div class="echo-box">${echoes.map((e) => `<div><strong>Echo · ${e.name}:</strong> ${e.note}</div>`).join("")}</div>` : ""}
         <div class="provocation"><span>Design provocation</span>${u.provocation}</div>
         <div style="margin-top:10px">
@@ -214,7 +326,7 @@ function renderForm() {
             const st = status[i.name] || "idea";
             return `<div class="card form-card st-${st}">
               <button class="pill ${st}" data-name="${esc(i.name)}" title="Click to change status">${st}</button>
-              <h3>${esc(i.name)}</h3>
+              <h3>${esc(i.name)}</h3>${i.src === "survey" ? `<span class="tag survey" style="margin-bottom:6px">from survey</span>` : ""}
               <p>${esc(i.body)}</p>
               <p class="try"><span>Try</span>${esc(i.try)}</p>
               <div>${(i.under || []).map((u) => `<a class="tag under" href="#undercurrents" data-under="${u}">${underById(u)?.name || u}</a>`).join("")}</div>
@@ -326,6 +438,8 @@ const view = { x: 0, y: 0, k: 1 };
 const TYPES = {
   core: { color: "--c-core", label: "Core" },
   embrace: { color: "--c-embrace", label: "Embrace" },
+  survey: { color: "--c-survey", label: "Survey" },
+  finding: { color: "--c-finding", label: "Findings" },
   person: { color: "--c-person", label: "Participants" },
   theme: { color: "--c-theme", label: "Themes" },
   hyp: { color: "--c-hyp", label: "Hypotheses" },
@@ -334,8 +448,8 @@ const TYPES = {
   theory: { color: "--c-theory", label: "Theory" },
   form: { color: "--c-form", label: "Form ideas" },
 };
-const LAYERS = { embrace: true, person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
-const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"] };
+const LAYERS = { embrace: true, survey: true, finding: true, person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
+const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"], h5: ["elevating"], h6: ["toomuch", "conditional"], h7: ["mirror", "elevating"], h8: ["conditional"] };
 
 function buildGraph() {
   const add = (id, label, type, r, ref) => {
@@ -351,6 +465,11 @@ function buildGraph() {
   DATA.echoes.forEach((e) => add("e-" + e.id, "↔ " + e.name, "echo", 4.5, e));
   DATA.theory.forEach((t) => add("x-" + t.id, t.name, "theory", 5, t));
   DATA.formLab.items.forEach((f, i) => add("f-" + i, f.name, "form", 4, f));
+  if (DATA.survey) {
+    add("s-hub", "Survey · " + DATA.survey.n + " voices", "survey", 11, DATA.survey);
+    for (let i = 0; i < DATA.survey.n; i++) { add("v-" + i, "Anonymous respondent", "survey", 2.6, null); BY_ID["v-" + i].voice = true; }
+    DATA.survey.findings.forEach((f) => add("g-" + f.id, f.title, "finding", 6, f));
+  }
 
   const seen = new Set();
   const link = (a, b, kind = "") => {
@@ -382,6 +501,15 @@ function buildGraph() {
   });
   DATA.formLab.items.forEach((f, i) => (f.under || []).forEach((u) => link("f-" + i, "u-" + u, "form")));
   DATA.formLab.items.forEach((f, i) => { if (f.type === "embrace") link("f-" + i, "embrace", "form"); });
+  if (DATA.survey) {
+    link("core", "s-hub", "survey");
+    for (let i = 0; i < DATA.survey.n; i++) link("s-hub", "v-" + i, "voice");
+    DATA.survey.findings.forEach((f) => {
+      link("s-hub", "g-" + f.id, "survey");
+      f.under.forEach((u) => link("g-" + f.id, "u-" + u, "survey"));
+      f.hyp.forEach((h) => link("g-" + f.id, "h-" + h, "survey"));
+    });
+  }
   applyLayers();
 }
 
@@ -432,7 +560,7 @@ function tick() {
     }
   }
   links.forEach(({ s, t, kind }) => {
-    const rest = kind === "form" || kind === "theory" ? 70 : kind === "echo" ? 80 : 120;
+    const rest = kind === "voice" ? 26 : kind === "form" || kind === "theory" ? 70 : kind === "echo" ? 80 : 120;
     const dx = t.x - s.x, dy = t.y - s.y, d = Math.sqrt(dx * dx + dy * dy) || 1;
     const f = (d - rest) * 0.004;
     s.vx += (dx / d) * f; s.vy += (dy / d) * f; t.vx -= (dx / d) * f; t.vy -= (dy / d) * f;
@@ -459,7 +587,7 @@ function draw() {
 
   links.forEach((l) => {
     const active = hover && (l.s === hover || l.t === hover);
-    const base = l.kind === "embrace" ? "242,166,90" : l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "167,139,219" : "90,90,100";
+    const base = l.kind === "voice" || l.kind === "survey" ? "125,220,176" : l.kind === "embrace" ? "242,166,90" : l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "167,139,219" : "90,90,100";
     ctx.strokeStyle = active ? "rgba(220,200,230,0.9)" : `rgba(${base},${hover ? 0.1 : l.kind ? 0.35 : 0.45})`;
     ctx.lineWidth = (active ? 1.5 : 0.8) / view.k;
     ctx.setLineDash(l.kind === "echo" ? [4 / view.k, 4 / view.k] : []);
@@ -479,8 +607,8 @@ function draw() {
     if (n.type === "under") { ctx.shadowBlur = 0; ctx.strokeStyle = c; ctx.lineWidth = 1 / view.k; ctx.beginPath(); ctx.arc(n.x, n.y, n.r + 4, 0, Math.PI * 2); ctx.stroke(); }
     ctx.shadowBlur = 0;
 
-    const small = n.type === "form" || n.type === "theory" || n.type === "echo";
-    if (!small || hoverSet.has(n) || view.k > 1.3) {
+    const small = n.type === "form" || n.type === "theory" || n.type === "echo" || n.voice;
+    if (!n.voice && (!small || hoverSet.has(n) || view.k > 1.3)) {
       ctx.fillStyle = n.type === "under" ? css("--c-under") : css("--text");
       const fs = (n.type === "core" ? 13 : n.type === "under" ? 12 : small ? 10 : 11) / Math.min(view.k, 1.4) * Math.min(view.k, 1);
       ctx.font = `${n.type === "under" ? "italic " : ""}${Math.max(fs, 8 / view.k)}px Inter, sans-serif`;
@@ -553,6 +681,7 @@ function openNode(n) {
   } else if (n.type === "under") {
     html += `<p>${r.desc}</p><p class="muted" style="margin-top:8px">${esc(r.reading)}</p>`;
     html += r.evidence.map(evQuote).map(smallQuote).join("");
+    html += (r.survey || []).map((t) => `<div class="quote survey-q" style="font-size:15px">“${esc(t)}”<div class="quote-meta">— survey respondent</div></div>`).join("");
     html += `<div class="provocation"><span>Design provocation</span>${r.provocation}</div>`;
     html += `<div style="margin-top:8px">${r.theory.map((t) => nodeChip("x-" + t)).join("")}</div>`;
     const forms = DATA.formLab.items.map((f, i) => [f, i]).filter(([f]) => (f.under || []).includes(r.id));
@@ -565,6 +694,12 @@ function openNode(n) {
   } else if (n.type === "form") {
     const sec = DATA.formLab.sections.find((s) => s.id === r.type);
     html += `<div class="muted" style="font-size:13px">${sec?.name}</div><p style="margin-top:6px">${esc(r.body)}</p><p class="try"><span>Try</span>${esc(r.try)}</p><div>${(r.under || []).map((u) => nodeChip("u-" + u)).join("")}</div>`;
+  } else if (n.type === "survey" && n.voice) {
+    html += `<p class="muted">One of ${DATA.survey.n} anonymous survey respondents. Their answers live on the Survey page, unattributed.</p>`;
+  } else if (n.type === "survey") {
+    html += `<p>${r.n} anonymous respondents · ${r.collected}</p><p style="margin-top:8px"><strong>${r.embrace.lift} of ${r.embrace.n}</strong> want an embrace that lifts them.</p><div style="margin-top:8px">${r.findings.map((f) => nodeChip("g-" + f.id)).join("")}</div><p style="margin-top:12px"><a href="#survey">Open the survey page →</a></p>`;
+  } else if (n.type === "finding") {
+    html += `<div class="f-stat" style="font-size:30px">${esc(r.stat)}</div><div class="f-stat-l">${esc(r.statLabel)}</div><p class="muted" style="margin-top:10px">${esc(r.evidence)}</p><p class="try"><span>For the form &amp; interaction</span>${esc(r.means)}</p><div>${r.under.map((u) => nodeChip("u-" + u)).join("")}${r.hyp.map((h) => nodeChip("h-" + h)).join("")}</div>`;
   } else if (n.type === "embrace") {
     html += `<p>${r.concept}</p>${embraceSplit()}<div style="margin-top:8px">${nodeChip("u-caging")}${nodeChip("u-elevating")}${nodeChip("h-h4")}</div>`;
   } else {
@@ -582,7 +717,7 @@ function openNode(n) {
 }
 
 /* ---------- Init ---------- */
-renderOverview(); renderInterviews(); renderThemes(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
+renderOverview(); renderSurvey(); renderInterviews(); renderThemes(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
 renderLayers();
 resizeGraph();
 buildGraph();
