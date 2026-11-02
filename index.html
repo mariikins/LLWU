@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LLWU — Learning to Love What Is Ugly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,500;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <div>
+        <div class="brand-title">LLWU</div>
+        <div class="brand-sub">thesis vault</div>
+      </div>
+    </div>
+
+    <input class="search" id="search" type="search" placeholder="Search vault…" />
+
+    <nav class="nav">
+      <div class="nav-label">Vault</div>
+      <a href="#graph" class="nav-link active" data-view="graph">◉ Graph</a>
+      <a href="#overview" class="nav-link" data-view="overview">▤ Overview</a>
+      <a href="#interviews" class="nav-link" data-view="interviews">❝ Interviews</a>
+      <a href="#themes" class="nav-link" data-view="themes">◈ Themes</a>
+      <a href="#hypotheses" class="nav-link" data-view="hypotheses">△ Hypotheses</a>
+      <a href="#cases" class="nav-link" data-view="cases">▣ Case Studies</a>
+      <a href="#formlab" class="nav-link" data-view="formlab">◇ Form Lab</a>
+      <a href="#notes" class="nav-link" data-view="notes">✎ Notes</a>
+    </nav>
+
+    <div class="sidebar-foot">Learning to Love<br />What Is Ugly</div>
+  </aside>
+
+  <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+
+  <main class="main" id="main">
+    <!-- GRAPH -->
+    <section class="view active" id="view-graph">
+      <header class="view-head">
+        <h1>Connections</h1>
+        <p class="muted">Participants, themes and hypotheses. Drag nodes, hover to trace links, click to open.</p>
+      </header>
+      <div class="graph-wrap">
+        <canvas id="graph"></canvas>
+        <div class="legend">
+          <span><i style="background:var(--c-person)"></i>Participant</span>
+          <span><i style="background:var(--c-theme)"></i>Theme</span>
+          <span><i style="background:var(--c-hyp)"></i>Hypothesis</span>
+          <span><i style="background:var(--c-core)"></i>Core</span>
+        </div>
+        <div class="node-panel" id="nodePanel"></div>
+      </div>
+    </section>
+
+    <!-- OVERVIEW -->
+    <section class="view" id="view-overview"></section>
+
+    <!-- INTERVIEWS -->
+    <section class="view" id="view-interviews">
+      <header class="view-head">
+        <h1>Interviews</h1>
+        <p class="muted">Three participants, ten questions.</p>
+      </header>
+      <div class="filters" id="interviewFilters"></div>
+      <div id="interviewList"></div>
+    </section>
+
+    <!-- THEMES -->
+    <section class="view" id="view-themes">
+      <header class="view-head">
+        <h1>Themes</h1>
+        <p class="muted">Quotes clustered by recurring ideas.</p>
+      </header>
+      <div class="grid" id="themeGrid"></div>
+    </section>
+
+    <!-- HYPOTHESES -->
+    <section class="view" id="view-hypotheses">
+      <header class="view-head"><h1>Hypotheses</h1></header>
+      <div id="hypList"></div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="view" id="view-cases">
+      <header class="view-head">
+        <h1>Case Studies</h1>
+        <p class="muted">Reference artists and works. Fill in notes in <code>data.js</code>.</p>
+      </header>
+      <div class="grid" id="caseGrid"></div>
+    </section>
+
+    <!-- FORM LAB -->
+    <section class="view" id="view-formlab">
+      <header class="view-head">
+        <h1>Form Lab</h1>
+        <p class="muted">Material swatches and prototype tests. Log reactions as you go.</p>
+      </header>
+      <div class="grid" id="formGrid"></div>
+    </section>
+
+    <!-- NOTES -->
+    <section class="view" id="view-notes">
+      <header class="view-head">
+        <h1>Notes</h1>
+        <p class="muted">Saved in this browser. Export to keep a backup.</p>
+      </header>
+      <form class="note-form" id="noteForm">
+        <input id="noteTitle" placeholder="Title" required />
+        <textarea id="noteBody" rows="5" placeholder="Write… link ideas with [[Theme Name]]"></textarea>
+        <input id="noteTags" placeholder="tags, comma separated" />
+        <div class="row">
+          <button type="submit" class="btn">Save note</button>
+          <button type="button" class="btn ghost" id="exportNotes">Export JSON</button>
+        </div>
+      </form>
+      <div class="grid" id="noteList"></div>
+    </section>
+  </main>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
