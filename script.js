@@ -34,6 +34,7 @@ function renderOverview() {
     <p class="quote">${p.statement}</p>
     <h2>Questions</h2>
     ${p.questions.map((q) => `<p>— ${q}</p>`).join("")}
+    ${DATA.embrace ? `<h2>The Embrace</h2><div class="card embrace-card"><p>${DATA.embrace.concept}</p>${embraceSplit()}</div>` : ""}
     <h2>Community</h2><p>${p.community}</p>
     <h2>Interaction concept</h2>
     <div class="grid">${p.interaction.map((i) => `<div class="card">${i}</div>`).join("")}</div>
@@ -48,13 +49,33 @@ function renderOverview() {
 
 /* ---------- Interviews ---------- */
 let filterP = "All";
+function embraceSplit() {
+  const e = DATA.embrace;
+  if (!e) return "";
+  return `<div class="embrace-split">
+    <div class="cage"><span>Caging embrace</span>${e.caging.map((x) => `<div>${x}</div>`).join("")}</div>
+    <div class="lift"><span>Elevating embrace</span>${e.elevating.map((x) => `<div>${x}</div>`).join("")}</div>
+  </div>`;
+}
+
+function embraceGuide() {
+  const e = DATA.embrace;
+  if (!e) return "";
+  let n = 0;
+  return `<details class="card embrace-card guide" open>
+    <summary><span class="q-title" style="color:var(--c-embrace)">Round 2 · interview guide</span><h2 style="margin:2px 0 0">The Embrace</h2></summary>
+    <p class="muted" style="margin:8px 0 4px">${e.concept}</p>
+    ${e.questions.map((s) => `<h3 style="margin-top:16px">${s.section}</h3><ol start="${n + 1}">${s.qs.map((q) => { n++; return `<li>${q}</li>`; }).join("")}</ol>`).join("")}
+  </details>`;
+}
+
 function renderInterviews() {
   $("#interviewFilters").innerHTML = ["All", ...DATA.participants]
     .map((p) => `<button class="chip ${p === filterP ? "on" : ""}" data-p="${p}">${p}</button>`)
     .join("");
   $$("#interviewFilters .chip").forEach((c) => (c.onclick = () => { filterP = c.dataset.p; renderInterviews(); }));
 
-  $("#interviewList").innerHTML = DATA.questions
+  $("#interviewList").innerHTML = embraceGuide() + DATA.questions
     .map((qt, i) => {
       const qs = DATA.quotes.filter((q) => q.q === i && (filterP === "All" || q.p === filterP));
       return `<div class="q-block">
@@ -229,9 +250,18 @@ function linkify(text) {
   }).replace(/\n/g, "<br>");
 }
 
+function pinnedNotes() {
+  return (DATA.pinnedNotes || []).map((n) => `<div class="card embrace-card">
+    <div class="q-title" style="color:var(--c-embrace)">Pinned</div>
+    <h3>${esc(n.title)}</h3>
+    <p>${linkify(n.body)}</p>
+    <div style="margin-top:8px">${n.tags.map((t) => `<span class="tag">#${esc(t)}</span>`).join("")}</div>
+  </div>`).join("");
+}
+
 function renderNotes() {
   const notes = loadNotes();
-  $("#noteList").innerHTML = notes.length
+  $("#noteList").innerHTML = pinnedNotes() + (notes.length
     ? notes.map((n, i) => `<div class="card">
         <button class="del" data-i="${i}" title="Delete">×</button>
         <h3>${esc(n.title)}</h3>
@@ -239,7 +269,7 @@ function renderNotes() {
         <p>${linkify(n.body)}</p>
         <div style="margin-top:8px">${n.tags.map((t) => `<span class="tag">#${esc(t)}</span>`).join("")}</div>
       </div>`).join("")
-    : `<p class="muted">No notes yet.</p>`;
+    : (DATA.pinnedNotes?.length ? "" : `<p class="muted">No notes yet.</p>`));
 
   $$("#noteList .del").forEach((b) => (b.onclick = () => {
     const n = loadNotes(); n.splice(+b.dataset.i, 1); saveNotes(n); renderNotes();
@@ -295,6 +325,7 @@ const view = { x: 0, y: 0, k: 1 };
 
 const TYPES = {
   core: { color: "--c-core", label: "Core" },
+  embrace: { color: "--c-embrace", label: "Embrace" },
   person: { color: "--c-person", label: "Participants" },
   theme: { color: "--c-theme", label: "Themes" },
   hyp: { color: "--c-hyp", label: "Hypotheses" },
@@ -303,8 +334,8 @@ const TYPES = {
   theory: { color: "--c-theory", label: "Theory" },
   form: { color: "--c-form", label: "Form ideas" },
 };
-const LAYERS = { person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
-const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"] };
+const LAYERS = { embrace: true, person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
+const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"] };
 
 function buildGraph() {
   const add = (id, label, type, r, ref) => {
@@ -312,6 +343,7 @@ function buildGraph() {
     ALL.push(n); BY_ID[id] = n;
   };
   add("core", "Learning to Love What Is Ugly", "core", 14);
+  if (DATA.embrace) add("embrace", "The Embrace", "embrace", 12, DATA.embrace);
   DATA.participants.forEach((p) => add("p-" + p, p, "person", 9, p));
   DATA.themes.forEach((t) => add("t-" + t.id, t.name, "theme", 6 + DATA.quotes.filter((q) => q.t.includes(t.id)).length * 0.4, t));
   DATA.hypotheses.forEach((h, i) => add("h-" + h.id, "H" + (i + 1) + ": " + h.title, "hyp", 8, h));
@@ -327,6 +359,10 @@ function buildGraph() {
     seen.add(k); ALL_LINKS.push({ s: BY_ID[a], t: BY_ID[b], kind });
   };
   DATA.participants.forEach((p) => link("core", "p-" + p));
+  if (DATA.embrace) {
+    link("core", "embrace", "embrace");
+    ["u-caging", "u-elevating", "h-h4", "x-rogers", "x-hooks", "x-grandin"].forEach((id) => link("embrace", id, "embrace"));
+  }
   DATA.hypotheses.forEach((h) => {
     link("core", "h-" + h.id);
     h.themes.forEach((t) => link("h-" + h.id, "t-" + t));
@@ -345,6 +381,7 @@ function buildGraph() {
     link("e-" + e.id, "u-" + e.under, "echo");
   });
   DATA.formLab.items.forEach((f, i) => (f.under || []).forEach((u) => link("f-" + i, "u-" + u, "form")));
+  DATA.formLab.items.forEach((f, i) => { if (f.type === "embrace") link("f-" + i, "embrace", "form"); });
   applyLayers();
 }
 
@@ -422,7 +459,7 @@ function draw() {
 
   links.forEach((l) => {
     const active = hover && (l.s === hover || l.t === hover);
-    const base = l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "167,139,219" : "90,90,100";
+    const base = l.kind === "embrace" ? "242,166,90" : l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "167,139,219" : "90,90,100";
     ctx.strokeStyle = active ? "rgba(220,200,230,0.9)" : `rgba(${base},${hover ? 0.1 : l.kind ? 0.35 : 0.45})`;
     ctx.lineWidth = (active ? 1.5 : 0.8) / view.k;
     ctx.setLineDash(l.kind === "echo" ? [4 / view.k, 4 / view.k] : []);
@@ -528,6 +565,8 @@ function openNode(n) {
   } else if (n.type === "form") {
     const sec = DATA.formLab.sections.find((s) => s.id === r.type);
     html += `<div class="muted" style="font-size:13px">${sec?.name}</div><p style="margin-top:6px">${esc(r.body)}</p><p class="try"><span>Try</span>${esc(r.try)}</p><div>${(r.under || []).map((u) => nodeChip("u-" + u)).join("")}</div>`;
+  } else if (n.type === "embrace") {
+    html += `<p>${r.concept}</p>${embraceSplit()}<div style="margin-top:8px">${nodeChip("u-caging")}${nodeChip("u-elevating")}${nodeChip("h-h4")}</div>`;
   } else {
     html += `<p class="muted">${DATA.project.statement}</p>`;
   }

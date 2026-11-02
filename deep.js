@@ -1,6 +1,6 @@
 // ===== LLWU DEEP LAYER =====
 // Undercurrents (deeper psychological patterns), echoes (where participants
-// mirror each other), theory, and Form Lab explorations.
+// mirror each other), theory, and Form Exploration ideas.
 // Evidence uses [question number (1-10), participant].
 
 /* ---------- UNDERCURRENTS ---------- */
@@ -124,7 +124,7 @@ DATA.theory = [
   { id: "afreud", name: "Defense Mechanisms", who: "Anna Freud", line: "Avoidance, intellectualization and other strategies the mind uses to protect itself from pain." },
 ];
 
-/* ---------- FORM LAB ---------- */
+/* ---------- FORM EXPLORATION ---------- */
 // type: material | form | interaction | projection | sound | ritual | question
 // under = linked undercurrents (shows in graph when "Form ideas" layer is on)
 DATA.formLab = {
@@ -195,3 +195,127 @@ DATA.formLab = {
     { type: "question", name: "Adolescents vs. adult women?", body: "Do the two communities react differently?", try: "Compare form responses by age range.", under: ["inheritance"] },
   ],
 };
+
+/* ===================================================================
+   THE EMBRACE
+   An embrace can cage someone or lift them up, even when both come
+   from love. The elevating embrace is more powerful than shame.
+   =================================================================== */
+DATA.embrace = {
+  concept:
+    "An embrace can cage someone in, or it can lift them up, accept them and celebrate them, even when both come from love. The caging embrace protects, corrects and holds a person in place. The elevating embrace is warm, balanced and full of color, and holds a person up instead of holding them in. This project argues that the second kind of love is far more powerful than shame, and lets the viewer feel one embrace turn into the other.",
+  caging: ["Protects", "Corrects", "Holds in place", "Asks you to change first", "Cold, tight, rigid"],
+  elevating: ["Accepts", "Celebrates", "Holds you up", "Lets you stay as you are", "Warm, balanced, full of color"],
+  questions: [
+    { section: "Being held", qs: [
+      "Think of a hug or embrace that made you feel completely accepted. What made it feel that way?",
+      "What makes a hug feel safe instead of suffocating?",
+      "If love had a color, temperature or texture, what would it be? What about shame?",
+    ]},
+    { section: "Love that cages", qs: [
+      "Have you ever been loved in a way that felt like a cage? What did that feel like?",
+      "Has someone ever tried to fix or change you because they loved you? How did that land?",
+      "What's the difference between being protected and being held back?",
+      "Have you ever held onto someone too tightly? What were you scared of?",
+    ]},
+    { section: "Love that lifts", qs: [
+      "Who made you feel bigger, freer or more yourself? What did they do differently?",
+      "What does it feel like to be celebrated instead of just tolerated?",
+      "Can you remember a moment when someone's love made a part of you that you'd hidden feel okay?",
+    ]},
+    { section: "Love vs. shame", qs: [
+      "Can someone love you and still make you feel ashamed? How do you hold both?",
+      "Do you think love is stronger than shame? When has it been, and when hasn't it?",
+      "What would it take for you to embrace the part of yourself you hide?",
+    ]},
+    { section: "The artwork", qs: [
+      "If an artwork could embrace you, what would you want it to do: hold you, lift you, or let you go?",
+      "What would make a warm, hopeful ending feel earned to you instead of fake?",
+    ]},
+  ],
+};
+
+DATA.hypotheses.push({
+  id: "h4",
+  title: "Love can cage or elevate",
+  body: "The same intention, love, can create shame or acceptance depending on whether it holds someone in place or holds them up. An embrace that celebrates someone as they are is more powerful than shame.",
+  implication: "Use one structure that can read as a cage or a cradle. The viewer's patience turns the cage into an elevating embrace of warmth, color and balance.",
+  themes: ["containment", "safety", "learned"],
+});
+
+DATA.undercurrents.push(
+  {
+    id: "caging",
+    name: "The Caging Embrace",
+    desc: "Love that holds too tight: protecting, correcting, fixing. It comes from love but teaches shame.",
+    evidence: [[3, "Maya"], [2, "Alex"], [9, "Leila"], [1, "Alex"]],
+    reading: "Maya's mom loved her and still passed on the idea that a body is a project to fix. Alex reshapes himself so the people around him can hold him. Leila's soft thing inside a shell that pushes back is an embrace that has turned into a cage. None of this comes from cruelty.",
+    theory: ["bowlby", "winnicott-false"],
+    themes: ["learned", "containment", "editing"],
+    provocation: "The same arms around the form, lit cold and pulled tight, read as bars.",
+  },
+  {
+    id: "elevating",
+    name: "The Elevating Embrace",
+    desc: "Love that holds you up instead of in place. Warm, balanced, and celebrating you as you are.",
+    evidence: [[5, "Leila"], [5, "Alex"], [10, "Maya"], [7, "Maya"]],
+    reading: "What changed things for participants wasn't being fixed. It was being met: seeing their traits celebrated on other people, being recognized, feeling safe enough to stay. Love that elevates doesn't ask the person to change first.",
+    theory: ["rogers", "hooks", "winnicott-holding", "grandin"],
+    themes: ["familiarity", "safety"],
+    provocation: "The same arms open, warm up and lift. The form is held up, not held in.",
+  }
+);
+
+DATA.echoes.push({
+  id: "e7", name: "Held vs. held back", a: [9, "Leila"], b: [10, "Maya"],
+  note: "A shell that pushes back versus a space safe enough to stay in. Two kinds of holding.", under: "caging",
+});
+
+DATA.theory.push(
+  { id: "rogers", name: "Unconditional Positive Regard", who: "Carl Rogers", line: "Accepting and valuing a person fully, without conditions on who they have to become." },
+  { id: "hooks", name: "All About Love", who: "bell hooks", line: "Love is an action and a choice, not only a feeling, and it can't coexist with control or domination." },
+  { id: "grandin", name: "Squeeze Machine", who: "Temple Grandin", line: "A device that applies deep, even pressure she found calming. Being held can soothe rather than trap." }
+);
+
+// Form Exploration: new section, placed after the Ritual Arc
+DATA.formLab.sections.splice(
+  DATA.formLab.sections.findIndex((s) => s.id === "ritual") + 1, 0,
+  { id: "embrace", name: "The Embrace", desc: "Warmth, color and balance. One embrace that can cage or lift." }
+);
+DATA.formLab.items.push(
+  { type: "embrace", name: "Cage or Cradle", body: "One set of metal arms around the soft form. Depending on light, heat and the viewer, it reads as bars or as a hold.", try: "Build one armature. Photograph it lit cold and tight vs. warm and open, and ask testers what they see.", under: ["caging", "elevating"] },
+  { type: "embrace", name: "The Opening Embrace", body: "Rush in and the arms tighten. Stay and they loosen, open and lift.", try: "Servo or pneumatic ribs. Tension mapped to how fast the viewer moves, release mapped to how long they stay.", under: ["caging", "elevating", "exposure"] },
+  { type: "embrace", name: "Lifted, Not Held Down", body: "As the embrace opens, it raises the form slightly off the ground: held up instead of held in.", try: "Counterweight or linear actuator. Test how little lift it takes to read as elevation.", under: ["elevating"] },
+  { type: "embrace", name: "Balance", body: "Soft and rigid holding each other up. Neither one wins.", try: "Tensegrity study where the silicone's tension keeps the metal structure standing.", under: ["elevating", "ambivalence"] },
+  { type: "embrace", name: "Warmth Blooms in Color", body: "Cold grays and blues while the form is caged. Warm amber, rose and gold bloom outward when the embrace opens.", try: "Projection color mapped to dwell time and touch, with the heat pads rising at the same time so color and warmth arrive together.", under: ["elevating"] },
+  { type: "embrace", name: "Two Heartbeats", body: "Two heartbeats, out of sync at first, slowly falling into rhythm as the viewer stays.", try: "Two sound sources whose tempos drift toward each other over dwell time.", under: ["elevating", "witnessed"] },
+  { type: "embrace", name: "Weighted Warmth", body: "A heated, weighted surface the viewer can rest a hand or arm in, so the sculpture embraces them back.", try: "Weighted fabric over a low-voltage heating pad. Look at Temple Grandin's squeeze machine as a reference.", under: ["elevating"] },
+  { type: "embrace", name: "The Viewer Embraces Back", body: "The last act is the viewer choosing to hold the form they rejected at the start.", try: "Shape part of the form to fit arms. Track how many testers actually hug it.", under: ["elevating", "exposure"] },
+  { type: "question", name: "How does someone tell the cage from the cradle?", body: "What makes the same gesture feel like holding in vs. holding up: pressure, time, whether you can leave?", try: "Show testers the armature in both states and ask them to describe what it's doing to the form.", under: ["caging", "elevating"] },
+  { type: "question", name: "Does the warm ending feel earned?", body: "Love should feel stronger than shame, not like a forced happy ending. Leila: 'That feels fake.'", try: "Ask testers whether the transformation felt believable.", under: ["elevating", "witnessed"] }
+);
+
+// The ritual arc now passes through the embrace
+(() => {
+  const s = DATA.formLab.items.find((i) => i.name === "5. Staying");
+  if (s) {
+    s.name = "5. Staying / The Embrace";
+    s.body = "Softening. The arms that seemed to cage the form open and lift it. Warmth and color bloom.";
+    s.try = "Dwell-based transformation: the opening embrace + color bloom + rising heat.";
+    s.under = ["exposure", "elevating"];
+  }
+})();
+
+// Pinned concept notes (always shown at the top of Notes)
+DATA.pinnedNotes = [
+  {
+    title: "The Embrace: concept",
+    body: "An embrace can cage someone or lift them up, even when both come from love.\n\nThe caging embrace protects, corrects and holds in place ([[Learned Shame]], [[Soft Inside a Shell]]). The elevating embrace is warm, balanced and celebrates the person as they are ([[Safety, Not Fixing]], [[Familiarity]]).\n\nThe thesis argues the second is more powerful than shame. The installation should let the viewer feel one turn into the other.",
+    tags: ["embrace", "concept"],
+  },
+  {
+    title: "Cage vs. cradle: what's the difference?",
+    body: "Same gesture, different meaning. Things to test:\n- Pressure: tight vs. even\n- Time: does it let go?\n- Freedom: can you leave?\n- Conditions: does it ask you to change first?\n- Temperature and color: cold and gray vs. warm and glowing\n- Direction: holding down vs. lifting up",
+    tags: ["embrace", "questions"],
+  },
+];
