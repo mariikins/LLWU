@@ -116,6 +116,11 @@ function renderSurvey() {
       <div class="q-title" style="color:var(--c-survey)">Google Form · ${S.collected}</div>
       <h1>Survey</h1>
       <p class="muted">${S.n} anonymous respondents, 18 and older. Every answer was optional.</p>
+      ${S.timeline ? `<div class="timeline" title="When responses came in">
+        <span class="muted">12:30 PM</span>
+        <div class="tl-track">${S.timeline.map((m, i) => `<i style="left:${((m - 30) / 125) * 100}%;--d:${i * 0.08}s" title="Response ${i + 1}"></i>`).join("")}</div>
+        <span class="muted">2:35 PM</span>
+      </div>` : ""}
     </header>
 
     <div class="stat-row">
@@ -149,6 +154,14 @@ function renderSurvey() {
       </div>
     </div>
 
+    ${S.codes ? `<h2>What the written answers say</h2>
+    <p class="muted" style="margin:-4px 0 14px">Open-ended answers grouped into themes. <a href="#responses">See the full sheet →</a></p>
+    <div class="card">${S.codes.map((cd) => `<div class="code-row">
+      <div class="w-label">${esc(cd.q)} <span class="muted" style="font-size:12px">· ${cd.n}</span></div>
+      <div><div class="sbar">${cd.cats.map(([n, v], i) => `<div style="flex:${v};background:${/^(Something else|Nothing|Never)/.test(n) ? "#3a3a42" : CAT[i]}" title="${esc(n)}: ${v} of ${cd.n}"></div>`).join("")}</div>
+      <div class="w-legend" style="margin-top:8px">${cd.cats.map(([n, v], i) => `<span><i style="background:${/^(Something else|Nothing|Never)/.test(n) ? "#3a3a42" : CAT[i]}"></i>${esc(n)} <b>${v}</b></span>`).join("")}</div></div>
+    </div>`).join("")}</div>` : ""}
+
     <h2>What the data means for the work</h2>
     <div class="grid">${findings}</div>
 
@@ -156,6 +169,55 @@ function renderSurvey() {
     <div class="voices">${voices}</div>
 
     <p class="muted" style="font-size:13px;margin-top:24px">${esc(S.note)}</p>`;
+}
+
+/* ---------- Responses sheet ---------- */
+let respSection = "All", respShowDemo = false, respQuery = "";
+function renderResponses() {
+  const R = DATA.responses;
+  const el = $("#view-responses");
+  if (!R || !el) return;
+  const sections = ["All", ...new Set(R.cols.map((c) => c.section))];
+  el.innerHTML = `
+    <header class="view-head">
+      <div class="q-title" style="color:var(--c-survey)">Google Form · ${R.date}</div>
+      <h1>Responses</h1>
+      <p class="muted">The full sheet: ${R.rows.length} respondents × ${R.cols.length} questions. Click a row to expand it.</p>
+    </header>
+    <div class="sheet-tools">
+      <input id="respSearch" class="search" type="search" placeholder="Search answers…" value="${esc(respQuery)}" />
+      <div class="filters" id="respFilters" style="margin:0">${sections.map((s) => `<button class="chip ${s === respSection ? "on" : ""}" data-s="${esc(s)}">${esc(s)}</button>`).join("")}</div>
+      <label class="toggle"><input type="checkbox" id="respDemo" ${respShowDemo ? "checked" : ""}/> Show identity columns</label>
+    </div>
+    <div class="sheet-wrap"><table class="sheet" id="sheet"></table></div>
+    <p class="muted" style="font-size:13px;margin-top:12px">Identity columns are hidden by default so answers can't be tied to a specific person at a glance. One duplicate submission was removed.</p>`;
+
+  const draw = () => {
+    const cols = R.cols.map((c, i) => ({ ...c, i })).filter((c) => (respShowDemo || !c.demo) && (respSection === "All" || c.section === respSection));
+    const q = respQuery.toLowerCase();
+    const rows = R.rows.map((r, n) => ({ ...r, n })).filter((r) => !q || r.cells.some((v) => v.toLowerCase().includes(q)));
+    const hl = (t) => {
+      const e = esc(t);
+      if (!q) return e;
+      const re = new RegExp("(" + q.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") + ")", "gi");
+      return e.replace(re, '<mark>$1</mark>');
+    };
+    $("#sheet").innerHTML = `
+      <thead>
+        <tr class="sec-row"><th class="rn"></th>${cols.map((c, k) => (k === 0 || cols[k - 1].section !== c.section) ? `<th colspan="${cols.filter((x) => x.section === c.section).length}">${esc(c.section)}</th>` : "").join("")}</tr>
+        <tr><th class="rn">#</th>${cols.map((c) => `<th class="${c.demo ? "demo" : ""}" title="${esc(c.q)}">${esc(c.short || c.q)}</th>`).join("")}</tr>
+      </thead>
+      <tbody>${rows.map((r) => `<tr data-n="${r.n}"><td class="rn">${r.n + 1}<span>${r.time}</span></td>${cols.map((c) => `<td class="${c.demo ? "demo" : ""}">${r.cells[c.i] ? `<div class="clamp">${hl(r.cells[c.i])}</div>` : '<span class="empty">—</span>'}</td>`).join("")}</tr>`).join("") || `<tr><td class="rn"></td><td colspan="${cols.length}" class="muted">No matches.</td></tr>`}</tbody>`;
+    $$("#sheet tbody tr").forEach((tr) => (tr.onclick = () => tr.classList.toggle("open")));
+  };
+  draw();
+  $("#respSearch").oninput = (e) => { respQuery = e.target.value; draw(); };
+  $("#respDemo").onchange = (e) => { respShowDemo = e.target.checked; draw(); };
+  $$("#respFilters .chip").forEach((c) => (c.onclick = () => {
+    respSection = c.dataset.s;
+    $$("#respFilters .chip").forEach((x) => x.classList.toggle("on", x === c));
+    draw();
+  }));
 }
 
 /* ---------- Interviews ---------- */
@@ -449,7 +511,7 @@ const TYPES = {
   form: { color: "--c-form", label: "Form ideas" },
 };
 const LAYERS = { embrace: true, survey: true, finding: true, person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
-const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"], h5: ["elevating"], h6: ["toomuch", "conditional"], h7: ["mirror", "elevating"], h8: ["conditional"] };
+const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"], h5: ["elevating"], h6: ["toomuch", "conditional"], h7: ["mirror", "elevating"], h8: ["conditional"], h9: ["avoidance", "conditional"] };
 
 function buildGraph() {
   const add = (id, label, type, r, ref) => {
@@ -717,7 +779,7 @@ function openNode(n) {
 }
 
 /* ---------- Init ---------- */
-renderOverview(); renderSurvey(); renderInterviews(); renderThemes(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
+renderOverview(); renderSurvey(); renderResponses(); renderInterviews(); renderThemes(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
 renderLayers();
 resizeGraph();
 buildGraph();
