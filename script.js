@@ -6,6 +6,7 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 
 /* ---------- Routing ---------- */
 function show(view) {
+  if (view === "themes") view = "undercurrents";
   $$(".view").forEach((v) => v.classList.remove("active"));
   $$(".nav-link").forEach((l) => l.classList.toggle("active", l.dataset.view === view));
   const el = $("#view-" + view);
@@ -296,7 +297,7 @@ function renderUnder() {
       const quotes = u.evidence.map(evQuote).filter(Boolean);
       const echoes = DATA.echoes.filter((e) => e.under === u.id);
       return `<div class="card under-card" id="under-${u.id}">
-        <div class="q-title">Undercurrent</div>
+        <div class="q-title">Theme</div>
         <h2 style="margin-top:2px">${u.name}</h2>
         <p>${u.desc}</p>
         <p class="muted" style="margin-top:10px">${esc(u.reading)}</p>
@@ -436,8 +437,8 @@ function renderNotes() {
     const n = loadNotes(); n.splice(+b.dataset.i, 1); saveNotes(n); renderNotes();
   }));
   $$("#noteList .wikilink[data-theme]").forEach((w) => (w.onclick = () => {
-    location.hash = "themes";
-    setTimeout(() => document.getElementById("theme-" + w.dataset.theme)?.scrollIntoView({ behavior: "smooth" }), 50);
+    location.hash = "undercurrents";
+    setTimeout(() => document.getElementById("under-" + w.dataset.theme)?.scrollIntoView({ behavior: "smooth" }), 50);
   }));
 }
 
@@ -479,15 +480,14 @@ const TYPES = {
   survey: { color: "--c-survey", label: "Survey" },
   finding: { color: "--c-finding", label: "Findings" },
   person: { color: "--c-person", label: "Participants" },
-  theme: { color: "--c-theme", label: "Themes" },
   hyp: { color: "--c-hyp", label: "Hypotheses" },
-  under: { color: "--c-under", label: "Undercurrents" },
+  under: { color: "--c-under", label: "Themes" },
   echo: { color: "--c-echo", label: "Echoes" },
   theory: { color: "--c-theory", label: "Theory" },
   form: { color: "--c-form", label: "Form ideas" },
 };
-const LAYERS = { embrace: true, survey: true, finding: true, person: true, theme: true, hyp: true, under: true, echo: true, theory: false, form: false };
-const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure", "double"], h4: ["caging", "elevating"], h5: ["elevating"], h6: ["toomuch", "conditional"], h7: ["mirror", "elevating"], h8: ["conditional"], h9: ["avoidance", "conditional"] };
+const LAYERS = { embrace: true, survey: true, finding: true, person: true, hyp: true, under: true, echo: true, theory: false, form: false };
+const HYP_UNDER = { h1: ["inheritance", "mirror"], h2: ["witnessed", "ambivalence"], h3: ["exposure"], h4: ["caging", "elevating"], h5: ["elevating"], h6: ["toomuch", "conditional"], h7: ["mirror", "elevating"], h8: ["conditional"], h9: ["avoidance", "conditional"] };
 
 function buildGraph() {
   const add = (id, label, type, r, ref) => {
@@ -497,7 +497,6 @@ function buildGraph() {
   add("core", "Learning to Love What Is Ugly", "core", 14);
   if (DATA.embrace) add("embrace", "The Embrace", "embrace", 12, DATA.embrace);
   DATA.participants.forEach((p) => add("p-" + p, p, "person", 9, p));
-  DATA.themes.forEach((t) => add("t-" + t.id, t.name, "theme", 6 + DATA.quotes.filter((q) => q.t.includes(t.id)).length * 0.4, t));
   DATA.hypotheses.forEach((h, i) => add("h-" + h.id, "H" + (i + 1) + ": " + h.title, "hyp", 8, h));
   DATA.undercurrents.forEach((u) => add("u-" + u.id, u.name, "under", 9, u));
   DATA.echoes.forEach((e) => add("e-" + e.id, "↔ " + e.name, "echo", 4.5, e));
@@ -522,10 +521,10 @@ function buildGraph() {
   }
   DATA.hypotheses.forEach((h) => {
     link("core", "h-" + h.id);
-    h.themes.forEach((t) => link("h-" + h.id, "t-" + t));
+    h.themes.forEach((t) => link("h-" + h.id, "u-" + t, "under"));
     (HYP_UNDER[h.id] || []).forEach((u) => link("h-" + h.id, "u-" + u, "under"));
   });
-  DATA.quotes.forEach((q) => q.t.forEach((t) => link("p-" + q.p, "t-" + t)));
+  DATA.quotes.forEach((q) => q.t.forEach((t) => link("p-" + q.p, "u-" + t, "under")));
   DATA.undercurrents.forEach((u) => {
     link("core", "u-" + u.id, "under");
     u.themes.forEach((t) => link("u-" + u.id, "t-" + t, "under"));
@@ -755,7 +754,7 @@ function openNode(n) {
 }
 
 /* ---------- Init ---------- */
-renderOverview(); renderSurvey(); renderResponses(); renderInterviews(); renderThemes(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
+renderOverview(); renderSurvey(); renderResponses(); renderInterviews(); renderUnder(); renderHyp(); renderCases(); renderForm(); renderNotes();
 renderLayers();
 resizeGraph();
 buildGraph();

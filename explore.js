@@ -57,8 +57,8 @@ function exSearch(raw) {
   const evidence = [];
   DATA.quotes.forEach((q) => {
     if (!exMatch(q.text, terms)) return;
-    const links = q.t.map((t) => "t-" + t);
-    DATA.undercurrents.forEach((u) => { if (u.evidence.some(([qq, p]) => qq === q.q + 1 && p === q.p)) links.push("u-" + u.id); });
+    const links = [...new Set(q.t.map((t) => "u-" + t))];
+    DATA.undercurrents.forEach((u) => { if (!links.includes("u-" + u.id) && u.evidence.some(([qq, p]) => qq === q.q + 1 && p === q.p)) links.push("u-" + u.id); });
     evidence.push({ key: "e" + evidence.length, text: q.text, src: "Interview · " + q.p, href: "#interviews", links });
   });
   const seen = new Set();
@@ -76,8 +76,7 @@ function exSearch(raw) {
   /* ---- 2. Ideas ---- */
   const ideas = {};
   const addIdea = (key, type, name, desc, href, own) => { ideas[key] = { key, type, name, desc, href, score: own ? 3 : 0, direct: own }; };
-  DATA.undercurrents.forEach((u) => addIdea("u-" + u.id, "Undercurrent", u.name, u.desc, "#undercurrents", exMatch([u.name, u.desc, u.reading, u.provocation].join(" "), terms)));
-  DATA.themes.forEach((t) => addIdea("t-" + t.id, "Theme", t.name, t.desc, "#themes", exMatch(t.name + " " + t.desc, terms)));
+  DATA.undercurrents.forEach((u) => addIdea("u-" + u.id, "Theme", u.name, u.desc, "#undercurrents", exMatch([u.name, u.desc, u.reading, u.provocation].join(" "), terms)));
   DATA.hypotheses.forEach((h, i) => addIdea("h-" + h.id, "Hypothesis " + (i + 1), h.title, h.implication, "#hypotheses", exMatch([h.title, h.body, h.implication].join(" "), terms)));
   (DATA.survey?.findings || []).forEach((f) => addIdea("g-" + f.id, "Finding", f.title, f.stat + " " + f.statLabel, "#survey", exMatch([f.title, f.evidence, f.means, f.statLabel].join(" "), terms)));
   evidence.forEach((e) => e.links.forEach((k) => { if (ideas[k]) ideas[k].score += 1; }));
@@ -87,7 +86,6 @@ function exSearch(raw) {
   DATA.undercurrents.forEach((u) => { uWeight[u.id] = ideas["u-" + u.id].score; });
   (DATA.survey?.findings || []).forEach((f) => { const s = ideas["g-" + f.id].score; if (s) f.under.forEach((u) => { uWeight[u] = (uWeight[u] || 0) + s * 0.5; }); });
   DATA.hypotheses.forEach((h) => { const s = ideas["h-" + h.id].score; if (s) (HYP_UNDER[h.id] || []).forEach((u) => { uWeight[u] = (uWeight[u] || 0) + s * 0.5; }); });
-  DATA.themes.forEach((t) => { const s = ideas["t-" + t.id].score; if (s) DATA.undercurrents.forEach((u) => { if (u.themes.includes(t.id)) uWeight[u.id] += s * 0.3; }); });
 
   // Keep only the strongest connections so results stay focused
   const ideaAll = Object.values(ideas).filter((i) => i.score > 0).sort((a, b) => b.score - a.score || b.direct - a.direct);
@@ -159,7 +157,7 @@ function drawExplore() {
   const id = exMore.i ? ideaList : ideaList.slice(0, EX_LIMIT);
   const fo = exMore.f ? forms : forms.slice(0, EX_LIMIT);
   const more = (key, total, shown) => total > shown || exMore[key] ? `<button class="ex-more" data-k="${key}">${exMore[key] ? "Show less" : `+ ${total - shown} more`}</button>` : "";
-  const typeColor = (t) => t.startsWith("Under") ? "var(--c-under)" : t.startsWith("Theme") ? "var(--c-theme)" : t.startsWith("Hyp") ? "var(--c-hyp)" : "var(--c-survey)";
+  const typeColor = (t) => t.startsWith("Theme") ? "var(--c-under)" : t.startsWith("Hyp") ? "var(--c-hyp)" : "var(--c-survey)";
 
   box.innerHTML = `
     <div class="ex-summary">
