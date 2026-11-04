@@ -50,7 +50,7 @@ function renderOverview() {
 }
 
 /* ---------- Survey ---------- */
-const CAT = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9"];
+const CAT = ["#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#e66767"];
 const hypLabel = (id) => "H" + (DATA.hypotheses.findIndex((h) => h.id === id) + 1);
 
 function liftTally(e, total) {
@@ -125,7 +125,7 @@ function renderSurvey() {
         <div class="lift-q">If a project could embrace you, what would you want it to do?</div>
         ${liftTally(e, S.n)}
       </div>
-      <blockquote class="lift-pull">Most people didn't ask to be held.<br>They asked to be lifted.<span>${e.lift} of the ${e.n} people who answered chose lift.</span></blockquote>
+      <blockquote class="lift-pull">Most people didn't ask to be held.<br>They asked to be <span class="pink">lifted</span>.<span>${e.lift} of the ${e.n} people who answered chose lift.</span></blockquote>
     </div>
 
     <h2>Who answered</h2>
@@ -624,8 +624,8 @@ function draw() {
 
   links.forEach((l) => {
     const active = hover && (l.s === hover || l.t === hover);
-    const base = l.kind === "voice" || l.kind === "survey" ? "125,220,176" : l.kind === "embrace" ? "242,166,90" : l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "167,139,219" : "90,90,100";
-    ctx.strokeStyle = active ? "rgba(220,200,230,0.9)" : `rgba(${base},${hover ? 0.1 : l.kind ? 0.35 : 0.45})`;
+    const base = l.kind === "voice" || l.kind === "survey" ? "125,220,176" : l.kind === "embrace" ? "242,166,90" : l.kind === "echo" ? "232,196,216" : l.kind === "under" ? "255,111,176" : "90,90,100";
+    ctx.strokeStyle = active ? "rgba(255,46,139,0.9)" : `rgba(${base},${hover ? 0.1 : l.kind ? 0.35 : 0.45})`;
     ctx.lineWidth = (active ? 1.5 : 0.8) / view.k;
     ctx.setLineDash(l.kind === "echo" ? [4 / view.k, 4 / view.k] : []);
     ctx.beginPath(); ctx.moveTo(l.s.x, l.s.y); ctx.lineTo(l.t.x, l.t.y); ctx.stroke();
