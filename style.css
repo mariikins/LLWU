@@ -18,8 +18,8 @@
   --c-theory: #6fb5a8;
   --c-form: #8d8c99;
   --radius: 10px;
-  --serif: "Cormorant Garamond", Georgia, serif;
-  --sans: "Inter", system-ui, sans-serif;
+  --serif: "Helvetica Neue", Helvetica, "Univers", Arial, sans-serif;
+  --sans: "Helvetica Neue", Helvetica, "Univers", Arial, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -362,3 +362,110 @@ h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
   .ex-lines { display: none; }
   .ex-hero h1 { font-size: 34px; }
 }
+
+
+/* =====================================================================
+   SWISS LAYER: Helvetica, hairlines, square corners, no glow or boxes.
+   Everything below overrides the softer card styling above.
+   ===================================================================== */
+:root { --radius: 0; --line: #2c2c30; --bg-2: #111113; }
+body { -webkit-font-smoothing: antialiased; letter-spacing: -0.005em; font-size: 15px; }
+h1 { font-weight: 500; font-size: 56px; letter-spacing: -0.035em; line-height: 1; margin-bottom: 14px; }
+h2 { font-weight: 500; font-size: 22px; letter-spacing: -0.02em; margin: 48px 0 14px; padding-top: 12px; border-top: 1px solid var(--text); }
+h3 { font-weight: 600; letter-spacing: -0.01em; }
+.view-head { margin-bottom: 36px; }
+.q-title, .nav-label, .ex-src, .ex-col-h, .provocation span, .try span, .lift-q { font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
+code { border-radius: 0; }
+
+/* Sidebar */
+.sidebar { background: var(--bg); padding: 24px 18px; }
+.brand-dot { border-radius: 0; box-shadow: none; width: 10px; height: 10px; }
+.brand-title { letter-spacing: 0; font-weight: 700; }
+.search { border-radius: 0; background: transparent; border: none; border-bottom: 1px solid var(--line); padding: 8px 0; }
+.search:focus { outline: none; border-bottom-color: var(--text); }
+.nav { gap: 0; }
+.nav-link { border-radius: 0; padding: 6px 0; display: flex; gap: 12px; }
+.nav-link:hover { background: none; color: var(--text); }
+.nav-link.active { background: none; color: var(--text); font-weight: 600; }
+.nx { font-variant-numeric: tabular-nums; color: #55555c; font-weight: 400; width: 18px; }
+.nav-link.active .nx { color: var(--c-core); }
+.sidebar-foot { font-style: normal; font-size: 12px; line-height: 1.4; }
+.menu-btn { border-radius: 0; }
+
+/* Cards become ruled blocks */
+.card, .voice-group, .under-card, .embrace-card, .finding-card, .form-card {
+  background: transparent; border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 16px 0 20px;
+}
+.card:hover { border-color: var(--line); }
+.grid { gap: 0 32px; }
+.under-card { margin-bottom: 8px; }
+.finding-card { border-top: 1px solid var(--line); }
+.lift-card, .stat-row .card { padding: 20px 0; }
+.stat-row { gap: 0 32px; }
+
+/* Tags and chips: plain text */
+.tag { border: none; background: none; border-radius: 0; padding: 0; margin: 2px 14px 2px 0; font-size: 12px; }
+.tag.under::before, .tag.theory::before, .tag.theme::before, .tag.hyp::before, .tag.survey::before, .tag.person::before { content: "→ "; opacity: 0.6; }
+.chip { border-radius: 0; border: none; background: none; padding: 4px 0; margin-right: 14px; border-bottom: 1px solid transparent; }
+.chip.on { border-bottom-color: var(--text); color: var(--text); }
+.pill { border-radius: 0; background: none; }
+.layer { border-radius: 0; background: var(--bg); }
+.layer i, .legend i, .w-legend i { border-radius: 0; }
+
+/* Quotes */
+.quote { font-size: 19px; line-height: 1.4; letter-spacing: -0.01em; border-left: 1px solid var(--line); }
+.survey-q { border-left-color: var(--line); }
+.voice { font-size: 17px; line-height: 1.4; }
+.cope { font-weight: 500; letter-spacing: -0.02em; }
+
+/* Boxes inside cards */
+.echo-box { border: none; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 10px 0; }
+.provocation { background: none; border-radius: 0; padding: 12px 0 0; border-top: 1px solid var(--line); font-style: normal; font-size: 17px; font-weight: 500; letter-spacing: -0.01em; }
+.embrace-split > div { border-radius: 0; }
+.embrace-split .cage { background: none; }
+.embrace-split .lift { background: none; }
+
+/* Numbers */
+.f-stat { font-weight: 500; font-size: 52px; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.lift-n { font-weight: 500; font-variant-numeric: tabular-nums; }
+.lift-pull { border-left: none; padding-left: 0; font-size: 34px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
+.lift-dots i, .w-cells i, .tl-track i { border-radius: 0; box-shadow: none; }
+.sbar, .meter, .meter > span { border-radius: 0; }
+
+/* Graph + panels */
+.graph-wrap { border-radius: 0; border: none; border-top: 1px solid var(--text); background: var(--bg); }
+.node-panel { border-radius: 0; backdrop-filter: none; background: var(--bg); border: 1px solid var(--line); }
+
+/* Forms and buttons */
+.note-form input, .note-form textarea { border-radius: 0; background: transparent; }
+.btn { border-radius: 0; background: var(--text); color: var(--bg); }
+.btn.ghost { background: none; color: var(--text); }
+.swatch-img { border-radius: 0; }
+.sheet-wrap { border-radius: 0; background: var(--bg); }
+.sheet thead th, .sheet .rn { background: var(--bg); }
+.sheet mark, .ex-card mark { border-radius: 0; }
+
+/* Explore */
+.ex-hero { text-align: left; margin: 2vh 0 32px; max-width: 900px; }
+.ex-hero h1 { font-size: 64px; }
+.ex-search input { border-radius: 0; border: none; border-bottom: 2px solid var(--text); background: transparent; font-size: 26px; padding: 12px 0 12px 34px; box-shadow: none; }
+.ex-search input:focus { box-shadow: none; border-bottom-color: var(--c-core); }
+.ex-icon { left: 0; }
+.ex-suggest { justify-content: flex-start; }
+.ex-summary { justify-content: flex-start; }
+.ex-empty { text-align: left; }
+.ex-col-h { border-top: 1px solid var(--text); padding-top: 10px; }
+.ex-col-h span { border-radius: 0; border: none; width: auto; height: auto; color: var(--c-core); }
+.ex-card, .ex-card.ev, .ex-card.idea, .ex-card.form { background: var(--bg); border: none; border-top: 1px solid var(--line); border-radius: 0; padding: 12px 0; }
+.ex-card:hover { transform: none; border-top-color: var(--text); }
+.ex-quote { font-size: 16px; font-weight: 400; }
+.ex-more { border-radius: 0; border: none; border-top: 1px solid var(--line); text-align: left; padding: 10px 0; }
+
+/* Motion: keep it calm */
+.view { animation: none; }
+.card h2, .under-card h2, .guide h2 { border-top: none; padding-top: 0; margin-top: 4px; font-size: 30px; letter-spacing: -0.03em; }
+h2 + .card, h2 + div > .card:first-child { border-top: none; padding-top: 0; }
+.lift-pull span { letter-spacing: 0; font-weight: 400; }
+.lift-row.go i { border: 1.5px solid #9a9aa2; }
+.lift-row.none i { border: 1.5px dashed #66666e; }
+.lift-row.none i { border: none; background: #34343a; }

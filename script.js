@@ -636,7 +636,7 @@ function draw() {
     const dim = hover && !hoverSet.has(n);
     ctx.globalAlpha = dim ? 0.15 : 1;
     const c = colorFor(n.type);
-    ctx.fillStyle = c; ctx.shadowColor = c; ctx.shadowBlur = n === hover ? 18 : 6;
+    ctx.fillStyle = c; ctx.shadowBlur = 0;
     ctx.beginPath();
     if (n.type === "echo") { ctx.save(); ctx.translate(n.x, n.y); ctx.rotate(Math.PI / 4); ctx.rect(-n.r, -n.r, n.r * 2, n.r * 2); ctx.restore(); }
     else ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
@@ -648,7 +648,7 @@ function draw() {
     if (!n.voice && (!small || hoverSet.has(n) || view.k > 1.3)) {
       ctx.fillStyle = n.type === "under" ? css("--c-under") : css("--text");
       const fs = (n.type === "core" ? 13 : n.type === "under" ? 12 : small ? 10 : 11) / Math.min(view.k, 1.4) * Math.min(view.k, 1);
-      ctx.font = `${n.type === "under" ? "italic " : ""}${Math.max(fs, 8 / view.k)}px Inter, sans-serif`;
+      ctx.font = `${n.type === "under" ? "500 " : ""}${Math.max(fs, 8 / view.k)}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
       ctx.textAlign = "center";
       const label = n.label.length > 34 ? n.label.slice(0, 32) + "…" : n.label;
       ctx.fillText(label, n.x, n.y + n.r + 13 / Math.max(view.k, 0.7));
